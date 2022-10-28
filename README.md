@@ -6,3 +6,4 @@ Dependencies:
 - Cython (https://pypi.org/project/Cython/)
 - Numpy (https://pypi.org/project/numpy/)
 - OpenCV (https://pypi.org/project/opencv-python/)
+- libfreenect2 (https://github.com/OpenKinect/libfreenect2/)
