@@ -9,7 +9,7 @@ def get_hsv_data(img):
     return [np.average(hsv_img[:,:,0]),np.average(hsv_img[:,:,1]),np.average(hsv_img[:,:,2])]
 
 glove_img = cv2.imread("cameraTest_renamed/Kinect V2/glove_colour.jpg")
-img = cv2.imread("cameraTest_renamed/Kinect V2/4.jpg")
+img = cv2.imread("cameraTest_renamed/Kinect V2/1.jpg")
 
 print(glove_img.shape)
 glove_hsv = get_hsv_data(glove_img)
@@ -22,22 +22,27 @@ sat_img = np.array(hsv_img[:,:,1])
 v_img   = np.array(hsv_img[:,:,2])
 
 
-hs = np.array([87.79605263157895, 179.17105263157896, 143.62828947368422])*1.2
-ls = np.array([87.79605263157895, 179.17105263157896, 143.62828947368422])*0.8
+hs = np.array(glove_hsv)*1.2
+ls = np.array(glove_hsv)*0.8
 
 mask = cv2.inRange(hsv_img,(ls[0],ls[1],ls[2]),(hs[0],hs[1],hs[2]))
-print(mask)
+
 imask = mask>0
 glove = np.zeros_like(img, np.uint8)
 glove[imask] = img[imask]
 #imask = mask>0
+cv2.imshow("msc",glove)
 
-kernel = np.ones((3,4), np.uint8)
+print(glove.dtype)
+
+
+kernel = np.ones((4,4), np.uint8)
+
 glove = cv2.cvtColor(glove, cv2.COLOR_BGR2GRAY)
 _,binary_glove = cv2.threshold(glove, 30, 255, cv2.THRESH_BINARY)
 
 binary_glove = cv2.erode(binary_glove,kernel)
-for i in range(4):
+for i in range(3):
     binary_glove = cv2.dilate(binary_glove,kernel)
 
 cv2.imshow("img",img)
