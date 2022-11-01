@@ -3,11 +3,20 @@ School project for robot-to-human handovers, using a UR10 robotic manipulator an
 
 
 Dependencies:
-- Cython (https://pypi.org/project/Cython/)
 - Numpy (https://pypi.org/project/numpy/)
 - OpenCV (https://pypi.org/project/opencv-python/)
+- Wheel (https://pypi.org/project/wheel/)
 - libfreenect2 (https://github.com/OpenKinect/libfreenect2/)
-   * IPython (https://pypi.org/project/ipython/)
-   * Matplotlib (https://pypi.org/project/matplotlib/)
-   * PyOpenGL (https://pypi.org/project/PyOpenGL/)
-   * wxPython (https://pypi.org/project/wxPython/)
+
+Maybe:
+- Cython (https://pypi.org/project/Cython/)
+- Matplotlib (https://pypi.org/project/matplotlib/)
+
+Install python wrapper for libfreenect2:
+- https://www.notaboutmy.life/posts/run-kinect-2-on-ubuntu-20-lts/
+  * sudo apt install pcl-tools -y
+  * PKG_CONFIG_PATH=$HOME/freenect2/lib/pkgconfig pip install freenect2
+- https://github.com/rjw57/freenect2-python/issues/6
+  * sudo ln -s $HOME/freenect2/lib/libfreenect2.so.0.2 /usr/lib/libfreenect2.so.0.2
+
+
