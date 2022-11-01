@@ -12,7 +12,7 @@ Maybe:
 - Cython (https://pypi.org/project/Cython/)
 - Matplotlib (https://pypi.org/project/matplotlib/)
 
-Install python wrapper for libfreenect2:
+Install python wrapper for libfreenect2 (https://rjw57.github.io/freenect2-python/):
 - https://www.notaboutmy.life/posts/run-kinect-2-on-ubuntu-20-lts/
   * sudo apt install pcl-tools -y
   * PKG_CONFIG_PATH=$HOME/freenect2/lib/pkgconfig pip install freenect2
