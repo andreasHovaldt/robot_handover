@@ -25,10 +25,8 @@ white = np.full_like(img, 255, np.uint8) #creates matix filled with 255 the shap
 glove[imask] = white[imask] # copies the image in the true positions in imatrix  
 
 #kernel = np.ones((4,4), np.uint8)
-a = [[0,1,1,0],[1,1,1,1],[1,1,1,1],[0,1,1,0]]
 kernel=np.array([[0,1,1,0],[1,1,1,1],[1,1,1,1],[0,1,1,0]], np.uint8)
 
-print(kernel.shape)
 
 glove = cv2.erode(glove ,kernel)
 for i in range(3):
