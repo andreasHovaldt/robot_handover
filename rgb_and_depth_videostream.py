@@ -50,8 +50,9 @@ with(device.running()):
             
             if i % 10 == 0:
                 print(i)
-                np.savetxt(f'/home/andreas/Desktop/Video_save/txt/{i}.txt',currentFrame)
-                print(currentFrame.max())
+                #np.savetxt(f'/home/andreas/Desktop/Video_save/txt/{i}.txt',currentFrame)
+                #print(currentFrame.max())
+                cv2.imshow("Video", currentFrame)
             i += 1
             #currentFrame.wri
             
