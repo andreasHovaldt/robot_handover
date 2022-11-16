@@ -40,7 +40,7 @@ with(device.running()):
             
         #     cv2.imshow("RGB", currentFrame[:,200:760,:])
         
-            if i % 10 == 0:
+            if i % 5 == 0:
                 print(i)
                 #np.savetxt(f'/home/andreas/Desktop/Video_save/txt/{i}.txt',currentFrame)
                 #print(currentFrame.max())
@@ -48,10 +48,10 @@ with(device.running()):
 
                 hsv_img = cv2.cvtColor(currentFrame,cv2.COLOR_BGR2HSV)
 
-                mask = cv2.inRange(hsv_img,(ls[0],ls[1],ls[2]),(hs[0],hs[1],hs[2]))
+                color_mask = cv2.inRange(hsv_img,(ls[0],ls[1],ls[2]),(hs[0],hs[1],hs[2]))
 
                 for i in range(1):
-                    glove = cv2.erode(mask ,kernel)
+                    glove = cv2.erode(color_mask,kernel)
                 for i in range(3):
                     glove = cv2.dilate(glove,kernel)
                 
@@ -65,6 +65,16 @@ with(device.running()):
             
             currentFrame = frame
             currentFrame = currentFrame.to_array()
+            print(f"depth max: {currentFrame.max()}")
+            
+            
+            depth_mask = currentFrame > 1000
+            currentFrame[depth_mask] = 0
+            depth_mask = currentFrame < 500
+            currentFrame[depth_mask] = 0
+            
+            cv2.imshow("Depth", currentFrame)
+            
             # currentFrame /= currentFrame.max()
             # if currentFrame[int(currentFrame.shape[0]/2),int(currentFrame.shape[1]/2)] > 1:
             #     print(currentFrame[int(currentFrame.shape[0]/2),int(currentFrame.shape[1]/2)])
