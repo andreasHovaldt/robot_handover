@@ -19,16 +19,12 @@ ls = np.array(glove_hsv)*0.8
 
 mask = cv2.inRange(hsv_img,(ls[0],ls[1],ls[2]),(hs[0],hs[1],hs[2]))
 
-imask = mask>0 #create a bolean matrix where only the glove is true
-glove = np.zeros_like(img, np.uint8) #creates a matrix filled with zeros the size of the imaga 
-white = np.full_like(img, 255, np.uint8) #creates matix filled with 255 the shape of img
-glove[imask] = white[imask] # copies the image in the true positions in imatrix  
-
-#kernel = np.ones((4,4), np.uint8)
 kernel=np.array([[0,1,1,0],[1,1,1,1],[1,1,1,1],[0,1,1,0]], np.uint8)
 
+print(kernel.shape)
 
-glove = cv2.erode(glove ,kernel)
+for i in range(1):
+    glove = cv2.erode(mask ,kernel)
 for i in range(3):
     glove = cv2.dilate(glove,kernel)
 
