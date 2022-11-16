@@ -12,10 +12,10 @@ downscale_val = (960, 540)
 with(device.running()):
     device.start()
     for type_, frame in device:
-        # if type_ is fn2.FrameType.Color:
+        if type_ is fn2.FrameType.Color:
             
-        #     currentFrame = frame 
-        #     currentFrame = currentFrame.to_array()
+            currentFrame = frame 
+            currentFrame = currentFrame.to_array()
         #     currentFrame = np.array(currentFrame, np.uint16)
         #     currentFrame.astype(np.uint16)
         #     currentFrame = currentFrame[:,:,0:3]
@@ -25,6 +25,14 @@ with(device.running()):
         #     i+=1
             
         #     cv2.imshow("RGB", currentFrame[:,200:760,:])
+        
+            if i % 10 == 0:
+                print(i)
+                #np.savetxt(f'/home/andreas/Desktop/Video_save/txt/{i}.txt',currentFrame)
+                #print(currentFrame.max())
+                cv2.imshow("Video", currentFrame)
+            i += 1
+        
         
         if type_ is fn2.FrameType.Depth:
             
@@ -48,21 +56,19 @@ with(device.running()):
             # cv2.imshow("Depth", currentFrame)
             #cv2.imwrite(f'/home/andreas/Desktop/Video_save/{i}.png',currentFrame)
             
-            if i % 10 == 0:
-                print(i)
-                #np.savetxt(f'/home/andreas/Desktop/Video_save/txt/{i}.txt',currentFrame)
-                #print(currentFrame.max())
-                cv2.imshow("Video", currentFrame)
-            i += 1
-            #currentFrame.wri
+            # if i % 10 == 0:
+            #     print(i)
+            #     #np.savetxt(f'/home/andreas/Desktop/Video_save/txt/{i}.txt',currentFrame)
+            #     #print(currentFrame.max())
+            #     cv2.imshow("Video", currentFrame)
+            # i += 1
             
-            #device.registration.wr
             
             
         K = cv2.waitKey(1)
         if K == 113:
             break
-        if i > 100:
+        if i > 1000:
             #device.stop()
             break
 
