@@ -1,10 +1,9 @@
 import freenect2 as fn2
 import numpy as np
-import cv2
-import PIL
 import matplotlib.pyplot as plt 
-import scipy.signal
 import png
+import os.path
+
 
 device = fn2.Device()
 frames = {}
@@ -27,7 +26,9 @@ with device.running():
         # ...stop only when we get an IR frame
         if type_ is fn2.FrameType.Color:
             color_frame = frame
-            images_c["C"]=color_frame
+            images_c[i]=np.array((color_frame.to_array), np.uint8)
+            print("color frame")
+
         if type_ is fn2.FrameType.Depth:
             depth_image = frame
             #depth_image /= depth_image.max()
@@ -36,17 +37,22 @@ with device.running():
             depth_array = frame.to_array()
             images_d[i]=np.array(depth_array, np.uint16)*7
             #cv2.imshow("IR Image", ir_image)
-        if i >= 3:
+        if i >= 10:
             break
         i+=1
-print(images_d[1])
+#print(images_d[1])
 
 for key in images_d:
-    with open(f'foo_gray{key}.png', 'wb') as f:
+    file_location = os.path.join("Kinect/images/depth",f"gray{key}.png")
+    with open(file_location, 'wb') as f:
         zgray2list = images_d[key].tolist()
         writer_depth.write(f, zgray2list)
-
-
+for key in images_c:
+    file_location = os.path.join("Kinect/images/color", f"color{key}.png")
+    print(images_c[key])
+    with open(file_location, 'wb') as f:
+        color2list = images_d[key].tolist()
+        writer_color.write(f, color2list)
 
 
 
