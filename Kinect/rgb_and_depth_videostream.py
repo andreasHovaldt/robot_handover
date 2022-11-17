@@ -9,7 +9,7 @@ frames = {}
 
 downscale_val = (960, 540)
 
-#----- Thresholding -----#
+#-------------------- Thresholding --------------------#
 def get_hsv_data(img):
     hsv_img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
     return [np.average(hsv_img[:,:,0]),np.average(hsv_img[:,:,1]),np.average(hsv_img[:,:,2])]
