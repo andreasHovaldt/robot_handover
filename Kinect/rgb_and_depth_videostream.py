@@ -108,7 +108,7 @@ with(device.running()):
         K = cv2.waitKey(1)
         if K == 113:
             break
-        if i > 10000:
+        if i > 1000:
             #device.stop()
             break
 
