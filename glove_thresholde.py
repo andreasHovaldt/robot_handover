@@ -2,7 +2,6 @@ import cv2
 import numpy as np 
 
 
-
 def get_hsv_data(img):
     hsv_img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
     return [np.average(hsv_img[:,:,0]),np.average(hsv_img[:,:,1]),np.average(hsv_img[:,:,2])]
