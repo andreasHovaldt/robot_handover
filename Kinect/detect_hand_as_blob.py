@@ -16,7 +16,7 @@ params = cv2.SimpleBlobDetector_Params()
 #params.maxThreshold = 255
  
 # Filter by Area.
-params.filterByArea = False
+params.filterByArea = True
 params.minArea = 500
 params.maxArea = 50000
 
@@ -76,13 +76,20 @@ pts = cv2.KeyPoint_convert(keypoints)
 print(pts.size/2) # Number of keypoints
 #print(keypoints[0].size)
 #Find coordinates
-x = keypoints[0].pt[0] #i is the index of the blob you want to get the position
-y = keypoints[0].pt[1]
+
+#Loop to print location of all keypoints
+for i in range(int(pts.size/2)):
+  #print("Keypoint nr:", [i]," X position is: ",keypoints[i].pt[0])
+  print("Keypoint nr:", [i]," Position is: ", (keypoints[i].pt[0], keypoints[i].pt[1]))
+  #print("Keypoint nr:", [i]," Y position is: ",keypoints[i].pt[1])
+
+#x = keypoints[0].pt[0] #i is the index of the blob you want to get the position
+#y = keypoints[0].pt[1]
 
 #print(x)
 #print(y)
 
-print((pts))
+#print((pts))
 
 cv2.waitKey(0)
 
