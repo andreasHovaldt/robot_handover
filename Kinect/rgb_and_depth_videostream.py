@@ -63,10 +63,11 @@ with(device.running()):
                 
                 keypoints, glove_with_keypoints= gloveDetector(glove)
                 
-                pts = cv2.KeyPoint_convert(keypoints)
+                pts = cv2.KeyPoint.convert(keypoints)
+                
                 
                 if i % 30 == 0:
-                    for n in range(int(pts.size/2)):
+                    for n in range(len(pts)):
                         print("Keypoint nr:", [n]," Position is: ", (int(keypoints[n].pt[0]), int(keypoints[n].pt[1])))
                 
                 cv2.imshow("Video", glove_with_keypoints)
@@ -83,10 +84,12 @@ with(device.running()):
             #print(f"depth max: {currentFrame.max()}")
             
             
-            depth_mask = currentFrame > 1000
+            depth_mask = currentFrame > 900
             currentFrame[depth_mask] = 0
-            depth_mask = currentFrame < 500
+            depth_mask = currentFrame < 700
             currentFrame[depth_mask] = 0
+
+            
             
             cv2.imshow("Depth", currentFrame)
             
@@ -120,8 +123,8 @@ with(device.running()):
         K = cv2.waitKey(1)
         if K == 113:
             break
-        if i > 1000:
-            #device.stop()
-            break
+        #if i > 1000:
+        #    #device.stop()
+        #    break
 
 cv2.destroyAllWindows()
