@@ -39,10 +39,9 @@ with(device.running()):
 
         
         
-        if i >= 100:
-            break   
-    i+=1
-#print(images_d[1])
+        break   
+    
+
 
 for key in images_d:
     file_location = os.path.join("Kinect/images/depth",f"gray{key}.png")
