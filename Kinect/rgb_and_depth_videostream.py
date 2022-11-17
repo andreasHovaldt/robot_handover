@@ -2,6 +2,7 @@ import freenect2 as fn2
 import numpy as np
 import cv2
 import time
+from detect_hand_as_blob import gloveDetector
 i = 0
 
 device = fn2.Device()
@@ -26,7 +27,7 @@ print(erode_kernel.shape)
 
 with(device.running()):
     device.start()
-    prev_time = 0
+    #prev_time = 0
     for type_, frame in device:
         if type_ is fn2.FrameType.Color:
             
@@ -36,19 +37,12 @@ with(device.running()):
         #     currentFrame = np.array(currentFrame, np.uint16)
         #     currentFrame.astype(np.uint16)
         #     currentFrame = currentFrame[:,:,0:3]
-        #     currentFrame = cv2.resize(currentFrame,downscale_val,interpolation=cv2.INTER_LINEAR)
-            
-        #     cv2.imwrite(f'/home/andreas/Desktop/Video_save/{i}.jpg',currentFrame)
-        #     i+=1
-            
-        #     cv2.imshow("RGB", currentFrame[:,200:760,:])
+
         
             if i % 1 == 0:
-                print(f"fps = {1/(time.time()-prev_time)}")
-                prev_time = time.time()
+                #print(f"fps = {1/(time.time()-prev_time)}")
+                #prev_time = time.time()
                 
-                #np.savetxt(f'/home/andreas/Desktop/Video_save/txt/{i}.txt',currentFrame)
-                #print(currentFrame.max())
                 
                 # cv2.resize(currentFrame,None,fx=0.6,fy=0.6,interpolation=cv2.INTER_LINEAR)
                 # cv2.imshow("Video", currentFrame)
@@ -56,16 +50,29 @@ with(device.running()):
                 
                 hsv_img = cv2.cvtColor(currentFrame,cv2.COLOR_BGR2HSV)
 
-                color_mask = cv2.inRange(hsv_img,(ls[0],ls[1]*0.8,ls[2]*0.8),(hs[0],hs[1]*1.2,hs[2]*1.2))
+                color_mask = cv2.inRange(hsv_img,(ls[0],ls[1]*0.7,ls[2]*0.7),(hs[0],hs[1]*1.3,hs[2]*1.3))
 
-                for i in range(1):
+                for n in range(1):
                     glove = cv2.erode(color_mask,erode_kernel)
-                for i in range(5):
+                for n in range(5):
                     glove = cv2.dilate(glove,dilate_kernel)
                 
                 
-                cv2.resize(glove,None,fx=0.6,fy=0.6,interpolation=cv2.INTER_LINEAR)
-                cv2.imshow("Video", glove)
+                glove = cv2.resize(glove,None,fx=0.6,fy=0.6,interpolation=cv2.INTER_LINEAR)
+                
+                
+                keypoints, glove_with_keypoints= gloveDetector(glove)
+                
+                pts = cv2.KeyPoint_convert(keypoints)
+                
+                if i % 30 == 0:
+                    for n in range(int(pts.size/2)):
+                        print("Keypoint nr:", [n]," Position is: ", (int(keypoints[n].pt[0]), int(keypoints[n].pt[1])))
+                
+                cv2.imshow("Video", glove_with_keypoints)
+            
+                
+                
             i += 1
         
         

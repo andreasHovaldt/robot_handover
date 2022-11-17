@@ -8,13 +8,9 @@ imgThresholded = (glove_thresholde.findGlove(img))
 params = cv2.SimpleBlobDetector_Params()
 #print(imgThresholded)
 
-#imgBlue = imgThresholded[:,:,0]
-#cv2.imshow("blue", imgBlue)
-#cv2.waitKey()
-# Change thresholds
 #params.minThreshold = 0
 #params.maxThreshold = 255
- 
+
 # Filter by Area.
 params.filterByArea = True
 params.minArea = 500
@@ -47,49 +43,64 @@ if int(ver[0]) < 3 :
   detector = cv2.SimpleBlobDetector(params)
 else : 
   detector = cv2.SimpleBlobDetector_create(params)
+  
  
 
 '''
 # Set up the detector with default parameters.
 detector = cv2.SimpleBlobDetector_create()
 '''
-# Detect blobs.
-keypoints = detector.detect(imgThresholded)
 
-#keypointsBlue = detector.detect(imgBlue)
 
-# Draw detected blobs as red circles.
-# cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
-im_with_keypoints = cv2.drawKeypoints(img, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-#imBlue_with_keypoints = cv2.drawKeypoints(imgBlue, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-#hsv_with_keypoints = cv2.drawKeypoints(HSV, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-imgThresholded_with_keypoints = cv2.drawKeypoints(imgThresholded, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
-# Show img
-cv2.imshow("Keypoints", im_with_keypoints)
-cv2.imshow("KeypointsThresholded", imgThresholded_with_keypoints)
-#cv2.imshow("KeypointsBlue", imBlue_with_keypoints)
-#cv2.imshow("Keypoints HSV", hsv_with_keypoints)
+def gloveDetector(image):
+  #Detect blob
+  k_points = detector.detect(image)
+  
+  #Draw blob
+  image_k_points = cv2.drawKeypoints(image, k_points, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+   
 
-pts = cv2.KeyPoint_convert(keypoints)
 
-print(pts.size/2) # Number of keypoints
-#print(keypoints[0].size)
-#Find coordinates
+  return k_points, image_k_points
+  
 
-#Loop to print location of all keypoints
-for i in range(int(pts.size/2)):
-  #print("Keypoint nr:", [i]," X position is: ",keypoints[i].pt[0])
-  print("Keypoint nr:", [i]," Position is: ", (keypoints[i].pt[0], keypoints[i].pt[1]))
-  #print("Keypoint nr:", [i]," Y position is: ",keypoints[i].pt[1])
 
-#x = keypoints[0].pt[0] #i is the index of the blob you want to get the position
-#y = keypoints[0].pt[1]
+# #------
+# # Detect blobs.
+# keypoints = detector.detect(imgThresholded)
 
-#print(x)
-#print(y)
 
-#print((pts))
+# # Draw detected blobs as red circles.
 
-cv2.waitKey(0)
+# im_with_keypoints = cv2.drawKeypoints(img, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
+# imgThresholded_with_keypoints = cv2.drawKeypoints(imgThresholded, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+# #---------
+
+
+def main():
+  
+  # Generate keypoints and image w/ keypoints
+  keypoints, imgThresholded_with_keypoints = gloveDetector(imgThresholded)
+  
+  # Show img
+  cv2.imshow("KeypointsThresholded", imgThresholded_with_keypoints)
+
+
+  pts = cv2.KeyPoint_convert(keypoints)
+
+  print(pts.size/2) # Number of keypoints
+  #print(keypoints[0].size)
+  #Find coordinates
+
+  #Loop to print location of all keypoints
+  for i in range(int(pts.size/2)):
+  
+    print("Keypoint nr:", [i]," Position is: ", (keypoints[i].pt[0], keypoints[i].pt[1]))
+  
+
+  cv2.waitKey(0)
+
+if __name__ == "__main__":
+  main()
