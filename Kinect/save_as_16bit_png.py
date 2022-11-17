@@ -1,3 +1,4 @@
+#https://drive.google.com/file/d/1c0eOgwHd-Imz0kRCo7tC52QU1zzBLPZD/view?usp=sharing
 import freenect2 as fn2
 import numpy as np
 import matplotlib.pyplot as plt 
@@ -24,24 +25,24 @@ with(device.running()):
     
     for type_, frame in device:
         # ...stop only when we get an IR frame
-        if type_ is fn2.FrameType.Depth:
-            depth_image = frame
-            depth_array = frame.to_array()
-            images_d[i]=np.array(depth_array, np.uint16)
-            #print("depth frame")
-            #cv2.imshow("IR Image", ir_image)
+        
         if type_ is fn2.FrameType.Color:
             color_frame = frame
             color_array = color_frame.to_array()
             #print(color_array)
             images_c[i]=np.array(color_array, np.uint8)
             #print("color frame")
-
+        if type_ is fn2.FrameType.Depth:
+            depth_image = frame
+            depth_array = frame.to_array()
+            images_d[i]=np.array(depth_array, np.uint16)
+            #print("depth frame")
+            #cv2.imshow("IR Image", ir_image)
         
         
-        if i >= 100:
+        if i >= 1000:
             break   
-    i+=1
+        i+=1
 #print(images_d[1])
 
 for key in images_d:
