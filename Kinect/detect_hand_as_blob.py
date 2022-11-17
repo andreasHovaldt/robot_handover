@@ -1,18 +1,28 @@
 import cv2
 import numpy as np
+import glove_thresholde
+
 
 img = cv2.imread("Mats/cameraTest/Kinect V2/5.jpg")
+imgThresholded = (glove_thresholde.findGlove(img))
 params = cv2.SimpleBlobDetector_Params()
-imgBlue = img[:,:,2]
+#print(imgThresholded)
 
+#imgBlue = imgThresholded[:,:,0]
+#cv2.imshow("blue", imgBlue)
+#cv2.waitKey()
 # Change thresholds
-params.minThreshold = 0
-params.maxThreshold = 255
+#params.minThreshold = 0
+#params.maxThreshold = 255
  
 # Filter by Area.
-params.filterByArea = True
+params.filterByArea = False
 params.minArea = 500
-params.maxArea = 5000
+params.maxArea = 50000
+
+#Filter by color
+params.filterByColor = True
+params.blobColor = 255
 
 
 # Filter by Circularity
@@ -44,20 +54,35 @@ else :
 detector = cv2.SimpleBlobDetector_create()
 '''
 # Detect blobs.
-keypoints = detector.detect(img)
+keypoints = detector.detect(imgThresholded)
 
-keypointsBlue = detector.detect(imgBlue)
+#keypointsBlue = detector.detect(imgBlue)
 
 # Draw detected blobs as red circles.
 # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
 im_with_keypoints = cv2.drawKeypoints(img, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-imBlue_with_keypoints = cv2.drawKeypoints(imgBlue, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+#imBlue_with_keypoints = cv2.drawKeypoints(imgBlue, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 #hsv_with_keypoints = cv2.drawKeypoints(HSV, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+imgThresholded_with_keypoints = cv2.drawKeypoints(imgThresholded, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
-
-# Show keypoints
-#cv2.imshow("Keypoints", im_with_keypoints)
-
-cv2.imshow("KeypointsBlue", imBlue_with_keypoints)
+# Show img
+cv2.imshow("Keypoints", im_with_keypoints)
+cv2.imshow("KeypointsThresholded", imgThresholded_with_keypoints)
+#cv2.imshow("KeypointsBlue", imBlue_with_keypoints)
 #cv2.imshow("Keypoints HSV", hsv_with_keypoints)
+
+pts = cv2.KeyPoint_convert(keypoints)
+
+print(pts.size/2) # Number of keypoints
+#print(keypoints[0].size)
+#Find coordinates
+x = keypoints[0].pt[0] #i is the index of the blob you want to get the position
+y = keypoints[0].pt[1]
+
+#print(x)
+#print(y)
+
+print((pts))
+
 cv2.waitKey(0)
+
