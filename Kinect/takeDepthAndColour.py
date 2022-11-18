@@ -14,7 +14,7 @@ with(device.running()):
             currentFrame = frame 
             currentFrame = currentFrame.to_array()
             
-            color_image = currentFrame[:,160:1760]
+            color_image = currentFrame#[:,160:1760]
             
             cv2.imshow("Color", color_image)
         
@@ -25,7 +25,7 @@ with(device.running()):
             currentFrame = frame 
             currentFrame = currentFrame.to_array()
             
-            depth_image = currentFrame[30:394,:]
+            depth_image = currentFrame#[30:394,:]
             
             cv2.imshow("Depth", depth_image)
             

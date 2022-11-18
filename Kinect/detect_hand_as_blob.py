@@ -58,7 +58,7 @@ def gloveDetector(image):
   k_points = detector.detect(image)
   
   #Draw blob
-  image_k_points = cv2.drawKeypoints(image, k_points, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+  image_k_points = 0#cv2.drawKeypoints(image, k_points, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
    
 
 
