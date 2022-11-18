@@ -13,7 +13,7 @@ params = cv2.SimpleBlobDetector_Params()
 
 # Filter by Area.
 params.filterByArea = True
-params.minArea = 500
+params.minArea = 1000
 params.maxArea = 50000
 
 #Filter by color

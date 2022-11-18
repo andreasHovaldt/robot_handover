@@ -35,6 +35,6 @@ with device.running():
     #pcd_list.append(device.registration.apply(images["D"], images["C"]))
 
 depth_array = device.registration.get_points_xyz_array(images["D"])
-print(depth_array[250,250,2])
+print(depth_array[250,250,:])
 
 
