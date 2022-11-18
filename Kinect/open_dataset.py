@@ -80,7 +80,7 @@ while True:
         #    depth_slice_list.append(result_array)
             
             #cv2.imshow(f"r{r}", conv2_8bit(result_array))
-        cv2.waitKey(10)
+        cv2.waitKey(1)
     print(f"time to proces 336 images = {time.time()-prev_time}")
     prev_time = time.time()
             
