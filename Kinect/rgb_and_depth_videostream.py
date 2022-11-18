@@ -15,7 +15,7 @@ def get_hsv_data(img):
     hsv_img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
     return [np.average(hsv_img[:,:,0]),np.average(hsv_img[:,:,1]),np.average(hsv_img[:,:,2])]
 
-glove_img = cv2.imread("Mats/cameraTest/Kinect V2/glove_colour.jpg")
+glove_img = cv2.imread("Mats/cameraTest/Kinect V2/glove_colour_v2.jpg")
 glove_hsv = get_hsv_data(glove_img)
 hs = np.array(glove_hsv)*1.2
 ls = np.array(glove_hsv)*0.8
@@ -43,14 +43,14 @@ with(device.running()):
                 #print(f"fps = {1/(time.time()-prev_time)}")
                 #prev_time = time.time()
                 
-                
-                # cv2.resize(currentFrame,None,fx=0.6,fy=0.6,interpolation=cv2.INTER_LINEAR)
-                # cv2.imshow("Video", currentFrame)
+                currentFrame = currentFrame[:,180:1740]
+                #currentFrame = cv2.resize(currentFrame,None,fx=0.6,fy=0.6,interpolation=cv2.INTER_LINEAR)
+                #cv2.imshow("Video", currentFrame)
                 
                 
                 hsv_img = cv2.cvtColor(currentFrame,cv2.COLOR_BGR2HSV)
 
-                color_mask = cv2.inRange(hsv_img,(ls[0],ls[1]*0.7,ls[2]*0.7),(hs[0],hs[1]*1.3,hs[2]*1.3))
+                color_mask = cv2.inRange(hsv_img,(ls[0],ls[1],ls[2]),(hs[0],hs[1],hs[2]))
 
                 for n in range(1):
                     glove = cv2.erode(color_mask,erode_kernel)
@@ -66,9 +66,10 @@ with(device.running()):
                 pts = cv2.KeyPoint.convert(keypoints)
                 
                 
-                if i % 30 == 0:
-                    for n in range(len(pts)):
-                        print("Keypoint nr:", [n]," Position is: ", (int(keypoints[n].pt[0]), int(keypoints[n].pt[1])))
+                
+                # if i % 30 == 0:
+                #     for n in range(len(pts)):
+                #         print("Keypoint nr:", [n]," Position is: ", (int(keypoints[n].pt[0]), int(keypoints[n].pt[1])))
                 
                 cv2.imshow("Video", glove_with_keypoints)
             
@@ -79,19 +80,36 @@ with(device.running()):
         
         if type_ is fn2.FrameType.Depth:
             
+            
             currentFrame = frame
+            
+            
+            #print(depth(int(keypoints[n].pt[0])), int(keypoints[n].pt[1]]))
+            
+
             currentFrame = currentFrame.to_array()
             #print(f"depth max: {currentFrame.max()}")
             
             
-            depth_mask = currentFrame > 900
-            currentFrame[depth_mask] = 0
-            depth_mask = currentFrame < 700
-            currentFrame[depth_mask] = 0
+            # depth_mask = currentFrame > 900
+            # currentFrame[depth_mask] = 0
+            # depth_mask = currentFrame < 700
+            # currentFrame[depth_mask] = 0
 
             
             
             cv2.imshow("Depth", currentFrame)
+            
+            try:
+                if i % 30 == 0:
+                    for n in range(len(pts)):
+                        print("Keypoint nr:", [n]," Position is: ", (int(keypoints[n].pt[0]), int(keypoints[n].pt[1])))
+                # depth = frame
+                # depth_array = device.registration.get_points_xyz_array(depth)
+                # print(depth_array[keypoints[0].pt[0],keypoints[0].pt[1]])
+            except:
+                continue
+            
             
             # currentFrame /= currentFrame.max()
             # if currentFrame[int(currentFrame.shape[0]/2),int(currentFrame.shape[1]/2)] > 1:
