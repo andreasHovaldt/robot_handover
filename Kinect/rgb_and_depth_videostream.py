@@ -3,19 +3,25 @@ import numpy as np
 import cv2
 import time
 from detect_hand_as_blob import gloveDetector
+from calibration_vector import calibrate_camera
 i = 0
 
 device = fn2.Device()
 
 downscale_val = (960, 540)
 
+
+calibration_Vector = calibrate_camera()
+#print(calibration_Vector)
+#time.sleep(10)
+
 #-------------------- Thresholding --------------------#
 def get_hsv_data(img):
     hsv_img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
     return [np.average(hsv_img[:,:,0]),np.average(hsv_img[:,:,1]),np.average(hsv_img[:,:,2])]
 
-glove_img = cv2.imread("Mats/pink.jpg")
-#glove_img = cv2.imread("Mats/cameraTest/Kinect V2/glove_color_v2.jpg")
+#glove_img = cv2.imread("Mats/pink.jpg")
+glove_img = cv2.imread("Mats/cameraTest/Kinect V2/glove_color_v2.jpg")
 glove_hsv = get_hsv_data(glove_img)
 hs = np.array(glove_hsv)*1.2
 ls = np.array(glove_hsv)*0.8
