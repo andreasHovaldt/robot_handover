@@ -6,7 +6,6 @@ from detect_hand_as_blob import gloveDetector
 i = 0
 
 device = fn2.Device()
-frames = {}
 
 downscale_val = (960, 540)
 
@@ -41,7 +40,7 @@ with(device.running()):
         #     currentFrame = currentFrame[:,:,0:3]
 
         
-            if i % 6 == 0:
+            if i % 4 == 0:
                 #print(f"fps = {1/(time.time()-prev_time)}")
                 #prev_time = time.time()
                 
@@ -126,7 +125,7 @@ with(device.running()):
                     #print(depth_array[depth_Y,depth_X,2])
                     
                     
-                    print(f"D_array method: {depth_array[depth_Y,depth_X,2]}")  #Flip method: {currentFrame[abs(depth_Y-424),abs(depth_X-512)]}")
+                    print(f"D_array method: {depth_array[depth_Y,depth_X,:]}")  #Flip method: {currentFrame[abs(depth_Y-424),abs(depth_X-512)]}")
                     
                     cv2.circle(currentFrame,((depth_X,depth_Y)),5,(0,0,0),4)
                     
