@@ -1,11 +1,19 @@
 import os
-import png 
+import png #pip install git+https://gitlab.com/drj11/pypng@pypng-0.20220715.0
 import cv2
-import freenect2
+#import freenect2
 import numpy as np
 import cv2 
 import scipy.ndimage
 import time
+import math
+
+import matplotlib.pyplot as plt
+
+from numpngw import write_png
+
+import open3d # pip install open3d
+
 
 #GLOBAL CONSTANTS 
 LOWER_DEPTH_THRESHOLD = 1200
@@ -31,7 +39,7 @@ def create_depth_img_array(path):
 
 
 #remember to add folder to workspace
-depth_array = create_depth_img_array("/home/alfred/Desktop/hand_track_dataset/test_singlehand/depth")
+depth_array = create_depth_img_array("C:/Users/UNI/Desktop/hand_track_dataset/test_singlehand/depth")
 
 
 print(f"depth array size {len(depth_array)}")
@@ -132,19 +140,51 @@ def find_hand(img16):
         #print(f"blob locations \n {blob_locations}")
 
         #find the pixel with the largest x value 
-        hand_location = blob_locations[blob_locations[:,1].argmax()]
+        hand_location = blob_locations[blob_locations[:,1].argmin()]
         #print(f"hand location \n {hand_location}")
-        only_largest_blob = conv2_8bit_detailed(only_largest_blob)
-        final = cv2.cvtColor(only_largest_blob,cv2.COLOR_GRAY2BGR)
+        #only_largest_blob = conv2_8bit_detailed(only_largest_blob)
+        final = cv2.cvtColor(conv2_8bit_detailed(only_largest_blob),cv2.COLOR_GRAY2BGR)
         
-        cv2.imshow("hand", cv2.circle(final,(hand_location[1],hand_location[0]),10,(0,0,255),-1))
-        return hand_location[0:2]
+        cv2.imshow("hand", cv2.circle(final,(hand_location[1],hand_location[0]),50,(0,0,255),-1))
+        print(img16.shape)
+        return [hand_location[0:2],only_largest_blob]
     else:
         return False
 
         
-def create_psuedo_point_cloud(img16):
-    print(".")
+def create_psuedo_point_cloud(img16_non_crop):
+    input_dimensions = img16_non_crop.shape
+    result_array = np.zeros((input_dimensions[0],input_dimensions[1],3), np.int16)
+    blob_location_mask = img16_non_crop > 1
+    blob_locations = np.argwhere(img16_non_crop)
+    #for location in blob_locations:
+    #    y = location[0]
+    #    x = location[1]
+    #    z = img16_non_crop[y,x]
+    #    result_array[y,x,:] = [math.sin(math.atan((x-256)*0.0022460 / 0.82))*z,-math.sin(math.atan((y-256)*0.0022460 / 0.82))*z,z]
+
+    #for y in range(input_dimensions[0]):
+    #    for x in range(input_dimensions[1]):
+    #        result_array[y,x,:] = [math.sin(math.atan((x-256)*0.0022460 / 0.82))*img16_non_crop[y,x],math.sin(math.atan((y-256)*0.0022460 / 0.82))*img16_non_crop[y,x],img16_non_crop[y,x]]
+
+    print(result_array)
+    flat = result_array.reshape(-1, result_array.shape[-1])
+    flat = flat[~np.all(flat == 0, axis=1)]
+    #flat = np.ma.masked_equal(flat,0)
+    
+    
+    reshaped_image = open3d.geometry.Image(img16_non_crop.reshape((424,512)))
+    
+    pcd = open3d.geometry.PointCloud.create_from_depth_image(reshaped_image ,open3d.camera.PinholeCameraIntrinsic(open3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault))
+    print(open3d.camera.PinholeCameraIntrinsic(open3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault)) 
+    #pcd = open3d.geometry.PointCloud()
+    #pcd.points = open3d.utility.Vector3dVector(flat)
+    
+    open3d.visualization.draw_geometries_with_editing([pcd])
+    
+
+
+    print(f"flat \n {flat}")
     
 
         
@@ -171,46 +211,55 @@ static_background = create_static_backgound(depth_array[1])
 
 
 prev_time = time.time()
-while True:
-    for depth_img in depth_array:
-        #crop the image 
-        depth_img = depth_img[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP]
 
-        #threshold the depth 
-        result = np.zeros_like(depth_img)
-        result2 = np.zeros_like(depth_img)
-        mask_close = depth_img > LOWER_DEPTH_THRESHOLD
-        mask_far = depth_img < HIGHER_DEPTH_THESHOLD
-        
-        mask_total = mask_close == mask_far 
-        result[mask_total] = depth_img[mask_total]
-        
-        result2 = fast_median_noise_reduction(result, 20, (3,3))
-        cv2.imshow("result1",conv2_8bit(result))
+for i, depth_img in enumerate(depth_array):
+    #crop the image 
+    correct_sized_image = np.zeros_like(depth_img, np.uint16)
+    depth_img = depth_img[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP]
 
-        #cv2.imshow("result2",conv2_8bit(result2))
-
-
-        np_no_bg = np.subtract(np.array(result2, np.int16), static_background) #dont subtract with uint
-        np_no_bg = np.array(np.absolute(np_no_bg), np.uint16)
-        
-        #cv2.imshow("np_no_bg", conv2_8bit(np_no_bg))
-
-        human = np.zeros_like(np_no_bg)
+    #threshold the depth 
+    result = np.zeros_like(depth_img)
+    result2 = np.zeros_like(depth_img)
+    mask_close = depth_img > LOWER_DEPTH_THRESHOLD
+    mask_far = depth_img < HIGHER_DEPTH_THESHOLD
     
-        mask = np_no_bg > 200        
-        
-        human[mask] = result2[mask]
-        
-        #cv2.imshow("human",conv2_8bit(human))
+    mask_total = mask_close == mask_far 
+    result[mask_total] = depth_img[mask_total]
+    
+    result2 = fast_median_noise_reduction(result, 20, (3,3))
+    cv2.imshow("result1",conv2_8bit(result))
 
-        
-        human_filt = fast_median_noise_reduction(human,30,(3,3))
-        #cv2.imshow("human filt",conv2_8bit(human_filt))
-        find_hand(human_filt)
-        create_psuedo_point_cloud(human_filt)
+    #cv2.imshow("result2",conv2_8bit(result2))
 
-        cv2.waitKey(1)
-    print(f"time to proces {len(depth_array)} = {time.time()-prev_time} \t avg fps = {len(depth_array)/(time.time()-prev_time)}")
-    prev_time = time.time()
+
+    np_no_bg = np.subtract(np.array(result2, np.int16), static_background) #dont subtract with uint
+    np_no_bg = np.array(np.absolute(np_no_bg), np.uint16)
+    
+    #cv2.imshow("np_no_bg", conv2_8bit(np_no_bg))
+
+    human = np.zeros_like(np_no_bg)
+
+    mask = np_no_bg > 200        
+    
+    human[mask] = result2[mask]
+    
+    #cv2.imshow("human",conv2_8bit(human))
+
+    
+    human_filt = fast_median_noise_reduction(human,30,(3,3))
+    #cv2.imshow("human filt",conv2_8bit(human_filt))
+    only_human = find_hand(human_filt)
+    if only_human != False:
+        correct_sized_image[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP] = only_human[1]
+        cv2.imshow("correct_size_only_human", conv2_8bit(correct_sized_image))
+        #save image 
+        writer_depth = png.Writer(512,424, bitdepth=16, greyscale=True)
+        print(correct_sized_image.shape)
+        write_png(f"C:/Users/UNI/Desktop/hand_track_dataset/only_human/{i}.png", correct_sized_image ,bitdepth=16) 
+        
+        create_psuedo_point_cloud(correct_sized_image)
+
+    cv2.waitKey(1)
+print(f"time to proces {len(depth_array)} = {time.time()-prev_time} \t avg fps = {len(depth_array)/(time.time()-prev_time)}")
+prev_time = time.time()
             
