@@ -126,7 +126,7 @@ with(device.running()):
                     #print(depth_array[depth_Y,depth_X,2])
                     
                     
-                    print(f"D_array method: {depth_array[depth_Y,depth_X,:]}")  #Flip method: {currentFrame[abs(depth_Y-424),abs(depth_X-512)]}")
+                    print(f"D_array method: {np.round(depth_array[depth_Y,depth_X,:],3)}")  #Flip method: {currentFrame[abs(depth_Y-424),abs(depth_X-512)]}")
                     
                     cv2.circle(currentFrame,((depth_X,depth_Y)),5,(0,0,0),4)
                     

@@ -3,8 +3,7 @@ import numpy as np
 import glove_thresholde
 
 
-img = cv2.imread("Mats/cameraTest/Kinect V2/5.jpg")
-imgThresholded = (glove_thresholde.findGlove(img))
+
 params = cv2.SimpleBlobDetector_Params()
 #print(imgThresholded)
 
@@ -81,6 +80,9 @@ def gloveDetector(image):
 
 def main():
   
+  img = cv2.imread("Mats/cameraTest/Kinect V2/5.jpg")
+  imgThresholded = (glove_thresholde.findGlove(img))
+
   # Generate keypoints and image w/ keypoints
   keypoints, imgThresholded_with_keypoints = gloveDetector(imgThresholded)
   
