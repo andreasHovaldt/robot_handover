@@ -11,7 +11,7 @@ device = fn2.Device()
 downscale_val = (960, 540)
 
 
-calibration_Vector = calibrate_camera()
+#calibration_Vector = calibrate_camera()
 #print(calibration_Vector)
 #time.sleep(10)
 
@@ -29,7 +29,6 @@ ls = np.array(glove_hsv)*0.8
 dilate_kernel=np.array([[0,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1],[0,1,1,1,0]], np.uint8)
 erode_kernel = np.ones((3,3), np.uint8)
 print(erode_kernel.shape)
-
 
 with(device.running()):
     device.start()

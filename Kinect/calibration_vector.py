@@ -84,12 +84,11 @@ def calibrate_camera():
                 
                 
                 
-            K = cv2.waitKey(1)
             if i == 30:
                 break
 
 
-    return np.round(depth_array[depth_Y,depth_X,:],3)
+        return np.round(depth_array[depth_Y,depth_X,:],3)
 
 
 def main():
