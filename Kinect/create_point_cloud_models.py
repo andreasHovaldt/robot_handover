@@ -10,9 +10,9 @@ import math
 
 import matplotlib.pyplot as plt
 
-from numpngw import write_png
+from numpngw import write_png #pip install numpngw
 
-import open3d # pip install open3d
+import open3d # pip install open3d , pip install pandas 
 
 
 #GLOBAL CONSTANTS 
@@ -39,7 +39,7 @@ def create_depth_img_array(path):
 
 
 #remember to add folder to workspace
-depth_array = create_depth_img_array("C:/Users/UNI/Desktop/hand_track_dataset/test_singlehand/depth")
+depth_array = create_depth_img_array("/home/alfred/Desktop/hand_track_dataset/test_singlehand/depth")
 
 
 print(f"depth array size {len(depth_array)}")
@@ -174,9 +174,9 @@ def create_psuedo_point_cloud(img16_non_crop):
     
     
     reshaped_image = open3d.geometry.Image(img16_non_crop.reshape((424,512)))
-    
-    pcd = open3d.geometry.PointCloud.create_from_depth_image(reshaped_image ,open3d.camera.PinholeCameraIntrinsic(open3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault))
-    print(open3d.camera.PinholeCameraIntrinsic(open3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault)) 
+    #PinholeCameraIntrinsicParameters.Kinect2DepthCameraDefault: 1
+    pcd = open3d.geometry.PointCloud.create_from_depth_image(reshaped_image ,open3d.camera.PinholeCameraIntrinsic(open3d.camera.PinholeCameraIntrinsicParameters.Kinect2DepthCameraDefault))
+    print(open3d.camera.PinholeCameraIntrinsic(open3d.camera.PinholeCameraIntrinsicParameters.Kinect2DepthCameraDefault)) 
     #pcd = open3d.geometry.PointCloud()
     #pcd.points = open3d.utility.Vector3dVector(flat)
     
@@ -207,6 +207,7 @@ def create_static_backgound(img16):
     return np.array(result2, np.int16)
 
 #we create a static background from the first frame which is empty 
+print(depth_array[1])
 static_background = create_static_backgound(depth_array[1])
 
 
@@ -255,7 +256,7 @@ for i, depth_img in enumerate(depth_array):
         #save image 
         writer_depth = png.Writer(512,424, bitdepth=16, greyscale=True)
         print(correct_sized_image.shape)
-        write_png(f"C:/Users/UNI/Desktop/hand_track_dataset/only_human/{i}.png", correct_sized_image ,bitdepth=16) 
+        #write_png(f"C:/Users/UNI/Desktop/hand_track_dataset/only_human/{i}.png", correct_sized_image ,bitdepth=16) 
         
         create_psuedo_point_cloud(correct_sized_image)
 

@@ -38,6 +38,14 @@ print(f"color array size {len(color_array)} \t depth array size {len(depth_array
 def conv2_8bit(img16):
     scaler2_8b = 255/(np.max(img16)+1)
     return np.array(img16*scaler2_8b, np.uint8)
+
+
+#create static backgound 
+static_backgound = depth_array[1]
+cropped_static_backgound = static_backgound[100:400,50:350]
+
+
+
 prev_time = time.time()
 while True:
     for color_img, depth_img in zip(color_array, depth_array):
