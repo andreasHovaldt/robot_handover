@@ -6,6 +6,8 @@ from detect_hand_as_blob import gloveDetector
 from calibration_vector import calibrate_camera
 #If the pink square used for calibration IS NOT FOUND the program will crash :)
 
+HIGHFRAMERATE = 6
+LOWFRAMERATE = 30
 i = 0
 
 device = fn2.Device()
@@ -57,9 +59,9 @@ with(device.running()):
                     color_exist = True
                     #print(image_counter)
             else:
-                if i % 6 == 0:
+                if i % framerate == 0:
                     #print("color2")
-
+                    framerate = HIGHFRAMERATE
                     hsv_img = cv2.cvtColor(currentFrame,cv2.COLOR_BGR2HSV)
 
                     color_mask = cv2.inRange(hsv_img,(ls[0],ls[1]*0.8,ls[2]*0.8),(hs[0],hs[1]*1.3,hs[2]*1.3)) #Lower / Make these values higher to make more or less sensitive glove 
@@ -150,9 +152,12 @@ with(device.running()):
                 cv2.imshow("Depth", currentFrame)
             
         if color_exist and depth_exist and image_counter > 14 and calibration_exist != True:
+            framerate = LOWFRAMERATE
             print("trying to calibrate")
-            calibration_vector = calibrate_camera(currentFrame_color, depth_array)
+            KU_transformation_matrix = calibrate_camera(currentFrame_color, depth_array)
             calibration_exist = True
+            print(f"This is KU:  \n  {KU_transformation_matrix}")
+            
                     
         K = cv2.waitKey(1)
         if K == 113:
