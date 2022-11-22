@@ -50,7 +50,7 @@ def calibrate_camera(color_image, depth_array):
         print("locating keypoints on depth map")
         depth_X = int((keypoints[n].pt[0]-delta1)/3)
         depth_Y = int((keypoints[n].pt[1] / 3) + delta2)
-        print(f"D_array method: {np.round(depth_array[depth_Y,depth_X,:],3)}")
+        print(f"Calibration vector found to be: {np.round(depth_array[depth_Y,depth_X,:],3)}")
 
     #time.sleep(10)
 

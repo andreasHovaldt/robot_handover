@@ -4,6 +4,8 @@ import cv2
 import time
 from detect_hand_as_blob import gloveDetector
 from calibration_vector import calibrate_camera
+#If the pink square used for calibration IS NOT FOUND the program will crash :)
+
 i = 0
 
 device = fn2.Device()
@@ -50,17 +52,17 @@ with(device.running()):
             
         
             if image_counter < 15:
-                    print(image_counter)
+                    
                     image_counter+=1
                     color_exist = True
-                    print(image_counter)
+                    #print(image_counter)
             else:
-                if i % 30 == 0:
+                if i % 4 == 0:
                     #print("color2")
 
                     hsv_img = cv2.cvtColor(currentFrame,cv2.COLOR_BGR2HSV)
 
-                    color_mask = cv2.inRange(hsv_img,(ls[0],ls[1]*0.9,ls[2]*0.9),(hs[0],hs[1]*1.2,hs[2]*1.2))
+                    color_mask = cv2.inRange(hsv_img,(ls[0],ls[1]*0.8,ls[2]*0.8),(hs[0],hs[1]*1.3,hs[2]*1.3)) #Lower / Make these values higher to make more or less sensitive glove 
 
                     for n in range(20):
                         glove = cv2.erode(color_mask,erode_kernel)
@@ -123,7 +125,7 @@ with(device.running()):
             delta1 = 240 #use this for calibration
             delta2 = 30 #Use this for calibration
             if image_counter < 15:
-                print(f"calibrating {image_counter}")
+                
                 depth_exist = True
             else:
                 try:
