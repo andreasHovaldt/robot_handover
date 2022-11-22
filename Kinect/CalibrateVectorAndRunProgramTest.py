@@ -34,7 +34,10 @@ with(device.running()):
     device.start()
     #prev_time = 0
     for type_, frame in device:
+        print(type_)
+        
         if type_ is fn2.FrameType.Color:
+            print("color")
             
             currentFrame = frame 
             currentFrame = currentFrame.to_array()
@@ -44,9 +47,13 @@ with(device.running()):
         #     currentFrame = np.array(currentFrame, np.uint16)
         #     currentFrame.astype(np.uint16)
         #     currentFrame = currentFrame[:,:,0:3]
-
-        
-            if i % 5 == 0:
+            if image_counter < 15:
+                    print(image_counter)
+                    image_counter+=1
+                    print(image_counter)
+            else:
+                if i % 5 == 0:
+                    print("color2")
                 #print(f"fps = {1/(time.time()-prev_time)}")
                 #prev_time = time.time()
                 
@@ -54,11 +61,8 @@ with(device.running()):
                 #currentFrame = cv2.resize(currentFrame,None,fx=0.6,fy=0.6,interpolation=cv2.INTER_LINEAR)
                 #cv2.imshow("Video", currentFrame)
                 
-                if image_counter < 15:
-                    print(image_counter)
-                    image_counter+=1
-                    print(image_counter)
-                else:
+                
+                
 
 
 
@@ -104,28 +108,31 @@ with(device.running()):
                 
                     
                     
-                i += 1
+            i += 1
                 
             
             
-            if type_ is fn2.FrameType.Depth:
-                
+        if type_ is fn2.FrameType.Depth:
+            print("depth")
 
-                currentFrame = frame
+            currentFrame = frame
 
-                currentFrame = currentFrame.to_array()
-                currentFrameIkkeArray = frame
-                #print(f"depth max: {currentFrame.max()}")
-                
-                
-                # depth_mask = currentFrame > 900
-                # currentFrame[depth_mask] = 0
-                # depth_mask = currentFrame < 700
-                # currentFrame[depth_mask] = 0
+            currentFrame = currentFrame.to_array()
+            currentFrameIkkeArray = frame
+            #print(f"depth max: {currentFrame.max()}")
+            
+            
+            # depth_mask = currentFrame > 900
+            # currentFrame[depth_mask] = 0
+            # depth_mask = currentFrame < 700
+            # currentFrame[depth_mask] = 0
 
 
-                delta1 = 240 #use this for calibration
-                delta2 = 30 #Use this for calibration
+            delta1 = 240 #use this for calibration
+            delta2 = 30 #Use this for calibration
+            if image_counter < 15:
+                print(f"calibrating {image_counter}")
+            else:
                 try:
                     for n in range(len(pts)):
                         delta1_adv = - 0.02814 * keypoints[n].pt[0] - 0.00704* keypoints[n].pt[1] + 298.656
@@ -153,13 +160,13 @@ with(device.running()):
                 
                 
                 cv2.imshow("Depth", currentFrame)
+                    
+                    
+                    
                 
-                
-                
-                
-            K = cv2.waitKey(1)
-            if K == 113:
-                break
+        K = cv2.waitKey(1)
+        if K == 113:
+            break
             #if i > 1000:
             #    #device.stop()
             #    break
