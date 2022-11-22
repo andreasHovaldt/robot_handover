@@ -3,8 +3,40 @@ import numpy as np
 import cv2
 import time
 from detect_hand_as_blob import gloveDetector
+from math import cos, sin, radians
 
 
+X_ANGLE_SCALER = 0.1367187500
+Y_ANGLE_SCALER = 0.1415094340
+
+def trig(angle):
+    r = radians(angle)
+    return cos(r), sin(r)
+
+def matrix(rotation, translation):
+    xC, xS = trig(rotation[0])
+    yC, yS = trig(rotation[1])
+    zC, zS = trig(rotation[2])
+    dX = translation[0]
+    dY = translation[1]
+    dZ = translation[2]
+    Translate_matrix = np.array([[1, 0, 0, dX],
+                                [0, 1, 0, dY],
+                                [0, 0, 1, dZ],
+                                [0, 0, 0, 1]])
+    Rotate_X_matrix = np.array([[1, 0, 0, 0],
+                                [0, xC, -xS, 0],
+                                [0, xS, xC, 0],
+                                [0, 0, 0, 1]])
+    Rotate_Y_matrix = np.array([[yC, 0, yS, 0],
+                                [0, 1, 0, 0],
+                                [-yS, 0, yC, 0],
+                                [0, 0, 0, 1]])
+    Rotate_Z_matrix = np.array([[zC, -zS, 0, 0],
+                                [zS, zC, 0, 0],
+                                [0, 0, 1, 0],
+                                [0, 0, 0, 1]])
+    return np.dot(Rotate_Z_matrix,np.dot(Rotate_Y_matrix,np.dot(Rotate_X_matrix,Translate_matrix)))
 
 def calibrate_camera(color_image, depth_array):
     
@@ -50,11 +82,12 @@ def calibrate_camera(color_image, depth_array):
         print("locating keypoints on depth map")
         depth_X = int((keypoints[n].pt[0]-delta1)/3)
         depth_Y = int((keypoints[n].pt[1] / 3) + delta2)
-        print(f"Calibration vector found to be: {np.round(depth_array[depth_Y,depth_X,:],3)}")
-
+        translation_vector = np.round(depth_array[depth_Y,depth_X,:],3)
+        print(f"Calibration vector found to be: {translation_vector}")
+        rot_angles=[depth_X*X_ANGLE_SCALER, depth_Y*Y_ANGLE_SCALER,0]
     #time.sleep(10)
-
-    return np.round(depth_array[depth_Y,depth_X,:],3)
+    
+    return matrix(rot_angles, translation_vector)
 
 
 def main():
