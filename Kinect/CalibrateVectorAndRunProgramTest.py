@@ -3,13 +3,13 @@ import numpy as np
 import cv2
 import time
 from detect_hand_as_blob import gloveDetector
-from calibration_vector import calibrate_camera
+from calibration_vector import calibrate_camera, matrix
 #If the pink square used for calibration IS NOT FOUND the program will crash :)
 
 HIGHFRAMERATE = 6
 LOWFRAMERATE = 30
 i = 0
-
+framerate = LOWFRAMERATE
 device = fn2.Device()
 
 downscale_val = (960, 540)
@@ -137,11 +137,12 @@ with(device.running()):
                         depth_X = int((keypoints[n].pt[0]-delta1)/3)
                         depth_Y = int((keypoints[n].pt[1] / 3) + delta2)
                         
-                        
-                        print(f"Vector to hand: {np.round(depth_array[depth_Y,depth_X,:],3)}")  #Flip method: {currentFrame[abs(depth_Y-424),abs(depth_X-512)]}")
-                        
+                        KH_transformation_matrix = matrix([0,0,0],np.round(depth_array[depth_Y,depth_X,:],3))
+                        print(f"Vector to hand: \n {np.round(depth_array[depth_Y,depth_X,:],3)}")  #Flip method: {currentFrame[abs(depth_Y-424),abs(depth_X-512)]}")
+                        print(f"KH matrix \n {KH_transformation_matrix}")
                         cv2.circle(currentFrame,((depth_X,depth_Y)),5,(0,0,0),4)
-                        
+                        print(f"UH matrix \n {np.dot(np.linalg.inv(KH_transformation_matrix),KU_transformation_matrix)}")
+                        #print(f"UH matrix45z \n {np.dot(np.linalg.inv(KH_transformation_matrix),KU_transformation_matrix)}")
                         
                         
                 except:
@@ -157,6 +158,13 @@ with(device.running()):
             KU_transformation_matrix = calibrate_camera(currentFrame_color, depth_array)
             calibration_exist = True
             print(f"This is KU:  \n  {KU_transformation_matrix}")
+
+            
+            #cv2.imshow()
+            
+            #cv2.waitKey()
+
+
             
                     
         K = cv2.waitKey(1)

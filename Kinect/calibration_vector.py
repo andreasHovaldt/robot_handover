@@ -36,7 +36,7 @@ def matrix(rotation, translation):
                                 [zS, zC, 0, 0],
                                 [0, 0, 1, 0],
                                 [0, 0, 0, 1]])
-    return np.dot(Rotate_Z_matrix,np.dot(Rotate_Y_matrix,np.dot(Rotate_X_matrix,Translate_matrix)))
+    return np.dot(np.dot(np.dot(Translate_matrix,Rotate_X_matrix),Rotate_Y_matrix),Rotate_Z_matrix)
 
 def calibrate_camera(color_image, depth_array):
     
@@ -65,7 +65,7 @@ def calibrate_camera(color_image, depth_array):
     print("creating hsv")
     hsv_img = cv2.cvtColor(color_image,cv2.COLOR_BGR2HSV)
     
-    color_mask = cv2.inRange(hsv_img,(ls[0],ls[1]*0.9,ls[2]*0.9),(hs[0],hs[1]*1.2,hs[2]*1.2))
+    color_mask = cv2.inRange(hsv_img,(ls[0],ls[1]*0.8,ls[2]*0.8),(hs[0],hs[1]*1.3,hs[2]*1.3))
 
     for n in range(20):
         pink_bin = cv2.erode(color_mask,erode_kernel)
@@ -84,10 +84,11 @@ def calibrate_camera(color_image, depth_array):
         depth_Y = int((keypoints[n].pt[1] / 3) + delta2)
         translation_vector = np.round(depth_array[depth_Y,depth_X,:],3)
         print(f"Calibration vector found to be: {translation_vector}")
-        rot_angles=[depth_X*X_ANGLE_SCALER, depth_Y*Y_ANGLE_SCALER,0]
+        rot_angles=[(depth_Y-212)*Y_ANGLE_SCALER,(depth_X-256)*X_ANGLE_SCALER,0]
+        print(f"rot angles are {rot_angles} \n {depth_X , depth_Y}")
     #time.sleep(10)
     
-    return matrix(rot_angles, translation_vector)
+    return matrix(rot_angles, translation_vector) 
 
 
 def main():
