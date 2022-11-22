@@ -55,7 +55,7 @@ with(device.running()):
                 #cv2.imshow("Video", currentFrame)
                 
                 
-                hsv_img = cv2.cvtColor(currentFrame,cv2.COLOR_BGR2HSV)
+                hsv_img = cv2.cvtColor(currentFrame_color,cv2.COLOR_BGR2HSV)
 
                 color_mask = cv2.inRange(hsv_img,(ls[0],ls[1]*0.9,ls[2]*0.9),(hs[0],hs[1]*1.2,hs[2]*1.2))
 
@@ -106,7 +106,7 @@ with(device.running()):
             currentFrame = currentFrame.to_array()
             currentFrameIkkeArray = frame
             #print(f"depth max: {currentFrame.max()}")
-            
+            depth_array = device.registration.get_points_xyz_array(currentFrameIkkeArray)
             
             # depth_mask = currentFrame > 900
             # currentFrame[depth_mask] = 0
@@ -125,7 +125,7 @@ with(device.running()):
                     #print(currentFrame[depth_Y,abs(depth_X-512)])
                     
                     
-                    depth_array = device.registration.get_points_xyz_array(currentFrameIkkeArray)
+                    #depth_array = device.registration.get_points_xyz_array(currentFrameIkkeArray)
                     
                     #print(currentFrame[depth_Y,abs(depth_X-512)])
                     #print(depth_array[depth_Y,depth_X,2])

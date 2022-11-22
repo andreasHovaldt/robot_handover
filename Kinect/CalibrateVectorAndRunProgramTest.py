@@ -10,7 +10,10 @@ device = fn2.Device()
 
 downscale_val = (960, 540)
 
-
+color_exist = False
+depth_exist = False
+calibration_exist = False
+calibration_vector = None 
 #calibration_Vector = calibrate_camera()
 #print(calibration_Vector)
 #time.sleep(10)
@@ -34,38 +37,26 @@ with(device.running()):
     device.start()
     #prev_time = 0
     for type_, frame in device:
-        print(type_)
+        #print(type_)
+        #print(calibration_vector)
         
         if type_ is fn2.FrameType.Color:
-            print("color")
+            #print("color")
             
             currentFrame = frame 
             currentFrame = currentFrame.to_array()
 
             currentFrame_color = currentFrame
             
-        #     currentFrame = np.array(currentFrame, np.uint16)
-        #     currentFrame.astype(np.uint16)
-        #     currentFrame = currentFrame[:,:,0:3]
+        
             if image_counter < 15:
                     print(image_counter)
                     image_counter+=1
+                    color_exist = True
                     print(image_counter)
             else:
-                if i % 5 == 0:
-                    print("color2")
-                #print(f"fps = {1/(time.time()-prev_time)}")
-                #prev_time = time.time()
-                
-                #currentFrame = currentFrame[:,180:1740]
-                #currentFrame = cv2.resize(currentFrame,None,fx=0.6,fy=0.6,interpolation=cv2.INTER_LINEAR)
-                #cv2.imshow("Video", currentFrame)
-                
-                
-                
-
-
-
+                if i % 30 == 0:
+                    #print("color2")
 
                     hsv_img = cv2.cvtColor(currentFrame,cv2.COLOR_BGR2HSV)
 
@@ -113,12 +104,13 @@ with(device.running()):
             
             
         if type_ is fn2.FrameType.Depth:
-            print("depth")
+            #print("depth")
 
-            currentFrame = frame
+            currentFrame_depth = frame
 
-            currentFrame = currentFrame.to_array()
+            currentFrame = currentFrame_depth.to_array()
             currentFrameIkkeArray = frame
+            depth_array = device.registration.get_points_xyz_array(currentFrame_depth)
             #print(f"depth max: {currentFrame.max()}")
             
             
@@ -132,6 +124,7 @@ with(device.running()):
             delta2 = 30 #Use this for calibration
             if image_counter < 15:
                 print(f"calibrating {image_counter}")
+                depth_exist = True
             else:
                 try:
                     for n in range(len(pts)):
@@ -139,13 +132,6 @@ with(device.running()):
                         delta2_adv = - 0.00190 * keypoints[n].pt[0] + 0.00971* keypoints[n].pt[1] + 26.472
                         depth_X = int((keypoints[n].pt[0]-delta1)/3)
                         depth_Y = int((keypoints[n].pt[1] / 3) + delta2)
-                        #print(currentFrame[depth_Y,abs(depth_X-512)])
-                        
-                        
-                        depth_array = device.registration.get_points_xyz_array(currentFrameIkkeArray)
-                        
-                        #print(currentFrame[depth_Y,abs(depth_X-512)])
-                        #print(depth_array[depth_Y,depth_X,2])
                         
                         
                         print(f"D_array method: {np.round(depth_array[depth_Y,depth_X,:],3)}")  #Flip method: {currentFrame[abs(depth_Y-424),abs(depth_X-512)]}")
@@ -160,10 +146,12 @@ with(device.running()):
                 
                 
                 cv2.imshow("Depth", currentFrame)
+            
+        if color_exist and depth_exist and image_counter > 14 and calibration_exist != True:
+            print("trying to calibrate")
+            calibration_vector = calibrate_camera(currentFrame_color, depth_array)
+            calibration_exist = True
                     
-                    
-                    
-                
         K = cv2.waitKey(1)
         if K == 113:
             break

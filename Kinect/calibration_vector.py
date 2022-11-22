@@ -6,11 +6,8 @@ from detect_hand_as_blob import gloveDetector
 
 
 
-def calibrate_camera():
-    i = 0
-
-    device = fn2.Device()
-
+def calibrate_camera(color_image, depth_array):
+    
     downscale_val = (960, 540)
 
     #-------------------- Thresholding --------------------#
@@ -33,62 +30,31 @@ def calibrate_camera():
 
 
     #-------------------- Running camera --------------------#
-    with(device.running()):
-        for type_, frame in device:
-            if type_ is fn2.FrameType.Color:
+    print("creating hsv")
+    hsv_img = cv2.cvtColor(color_image,cv2.COLOR_BGR2HSV)
+    
+    color_mask = cv2.inRange(hsv_img,(ls[0],ls[1]*0.9,ls[2]*0.9),(hs[0],hs[1]*1.2,hs[2]*1.2))
 
-                currentFrame = frame.to_array()
+    for n in range(20):
+        pink_bin = cv2.erode(color_mask,erode_kernel)
+    for n in range(5):
+        pink_bin = cv2.dilate(pink_bin,dilate_kernel)
 
-                currentFrame_color = currentFrame
+    print("finding keypoints")
+    keypoints, pink_with_keypoints = gloveDetector(pink_bin)
 
+    pts = cv2.KeyPoint.convert(keypoints)
+    print(f"points {pts}")
+    
+    for n in range(len(pts)):
+        print("locating keypoints on depth map")
+        depth_X = int((keypoints[n].pt[0]-delta1)/3)
+        depth_Y = int((keypoints[n].pt[1] / 3) + delta2)
+        print(f"D_array method: {np.round(depth_array[depth_Y,depth_X,:],3)}")
 
-                if i % 2 == 0:
+    #time.sleep(10)
 
-                    hsv_img = cv2.cvtColor(currentFrame,cv2.COLOR_BGR2HSV)
-
-                    color_mask = cv2.inRange(hsv_img,(ls[0],ls[1]*0.9,ls[2]*0.9),(hs[0],hs[1]*1.2,hs[2]*1.2))
-
-                    for n in range(20):
-                        pink_bin = cv2.erode(color_mask,erode_kernel)
-                    for n in range(5):
-                        pink_bin = cv2.dilate(pink_bin,dilate_kernel)
-
-
-                    keypoints, pink_with_keypoints = gloveDetector(pink_bin)
-
-                    pts = cv2.KeyPoint.convert(keypoints)
-
-                i += 1
-
-
-            if type_ is fn2.FrameType.Depth:
-
-                currentFrame = frame.to_array()
-                currentFrameIkkeArray = frame
-
-
-
-                try:
-                    for n in range(len(pts)):
-                        depth_X = int((keypoints[n].pt[0]-delta1)/3)
-                        depth_Y = int((keypoints[n].pt[1] / 3) + delta2)
-
-                        depth_array = device.registration.get_points_xyz_array(currentFrameIkkeArray)
-
-                        print(f"D_array method: {np.round(depth_array[depth_Y,depth_X,:],3)}")
-
-                except:
-                    continue
-
-                
-                
-                
-                
-            if i == 30:
-                break
-
-
-        return np.round(depth_array[depth_Y,depth_X,:],3)
+    return np.round(depth_array[depth_Y,depth_X,:],3)
 
 
 def main():
