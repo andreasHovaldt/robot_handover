@@ -46,7 +46,7 @@ with(device.running()):
         #     currentFrame = currentFrame[:,:,0:3]
 
         
-            if i % 15 == 0:
+            if i % 8 == 0:
                 #print(f"fps = {1/(time.time()-prev_time)}")
                 #prev_time = time.time()
                 
@@ -142,7 +142,7 @@ with(device.running()):
                 continue
             
             
-            #cv2.imshow("Depth", currentFrame)
+            cv2.imshow("Depth", currentFrame)
             
             
             
