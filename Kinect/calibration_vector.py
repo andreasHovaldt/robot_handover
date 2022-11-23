@@ -6,7 +6,7 @@ from detect_hand_as_blob import gloveDetector
 from math import cos, sin, radians
 
 
-X_ANGLE_SCALER = 0.1367187500
+X_ANGLE_SCALER = 0.1562500000
 Y_ANGLE_SCALER = 0.1415094340
 
 def trig(angle):
