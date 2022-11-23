@@ -6,7 +6,7 @@ from detect_hand_as_blob import gloveDetector
 from calibration_vector import calibrate_camera, matrix
 #If the pink square used for calibration IS NOT FOUND the program will crash :)
 
-HIGHFRAMERATE = 6
+HIGHFRAMERATE = 8
 LOWFRAMERATE = 30
 i = 0
 framerate = LOWFRAMERATE
@@ -142,6 +142,7 @@ with(device.running()):
                         print(f"KH matrix \n {KH_transformation_matrix}")
                         cv2.circle(currentFrame,((depth_X,depth_Y)),5,(0,0,0),4)
                         print(f"UH matrix \n {np.dot(np.linalg.inv(KH_transformation_matrix),KU_transformation_matrix)}")
+                        print(f"This is KU:  \n  {KU_transformation_matrix}")
                         #print(f"UH matrix45z \n {np.dot(np.linalg.inv(KH_transformation_matrix),KU_transformation_matrix)}")
                         
                         
@@ -157,6 +158,7 @@ with(device.running()):
             print("trying to calibrate")
             KU_transformation_matrix = calibrate_camera(currentFrame_color, depth_array)
             calibration_exist = True
+            
             print(f"This is KU:  \n  {KU_transformation_matrix}")
 
             
