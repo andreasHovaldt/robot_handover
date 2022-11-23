@@ -3,10 +3,10 @@ import numpy as np
 import cv2
 import time
 from detect_hand_as_blob import gloveDetector
-from calibration_vector import calibrate_camera, matrix
+from calibration_vector import calibrate_camera
 #If the pink square used for calibration IS NOT FOUND the program will crash :)
 
-HIGHFRAMERATE = 8
+HIGHFRAMERATE = 6
 LOWFRAMERATE = 30
 i = 0
 framerate = LOWFRAMERATE
@@ -140,12 +140,13 @@ with(device.running()):
                         cv2.circle(currentFrame,((depth_X,depth_Y)),5,(0,0,0),4)
 
                         #create the vector to the hand in the kinect coor 
-                        kinect_to_hand_vector = np.round(depth_array[depth_Y,depth_X,:,1],3)
+                        kinect_to_hand_vector = np.append(np.round(depth_array[depth_Y,depth_X,:],3),[1])
                         
                         #using the transformation matrix found in the calibration the vector is found represnted in the ur coor 
                         ur_to_hand_vector = np.dot(np.linalg.inv(KU_transformation_matrix), kinect_to_hand_vector)
                         
                         print(f"kinect to hand vector {kinect_to_hand_vector} \n ur to hand vector in ur coor {ur_to_hand_vector}")
+                        
 
                         
                 except:

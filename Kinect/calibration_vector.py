@@ -7,7 +7,7 @@ from math import cos, sin, radians
 
 
 
-X_ANGLE_SCALER = 80/512
+X_ANGLE_SCALER = 90/512 #125
 Y_ANGLE_SCALER = 60/424
 
 
@@ -42,9 +42,15 @@ def create_transformation_matrix(translation_vector, rotation_y = 0, rotation_x 
     transformation_matrix = np.dot(transformation_matrix,rotx_matrix(rotation_x))
     return transformation_matrix
 
-mark_to_ur = create_transformation_matrix(np.array([0,0,-0.10,1]),45,90)
+#make translation matrix 
+
 
 def calibrate_camera(color_image, depth_array):
+    mark_to_ur_translation = create_transformation_matrix(np.array([0,0,-0.17,1]))
+    
+    mark_to_ur_rotation_y = create_transformation_matrix(np.array([0,0,0,1]),45)
+    mark_to_ur_rotation_x = create_transformation_matrix(np.array([0,0,0,1]),0,90)
+    mark_to_ur = np.dot(np.dot(mark_to_ur_translation,mark_to_ur_rotation_y),mark_to_ur_rotation_x)
     
     downscale_val = (960, 540)
 
@@ -93,8 +99,10 @@ def calibrate_camera(color_image, depth_array):
         rot_angles=[(depth_Y-212)*Y_ANGLE_SCALER,(depth_X-256)*X_ANGLE_SCALER,0]
         print(f"rot angles are {rot_angles} \n {depth_X , depth_Y}")
     #time.sleep(10)
-    translation_vector = np.c_[translation_vector, 1]
-    return np.dot(create_transformation_matrix(translation_vector,rot_angles[1]), mark_to_ur)
+    translation_vector = np.append(translation_vector, [1])
+    print(f"translation_vector {translation_vector}")
+    #return create_transformation_matrix(translation_vector,rot_angles[1])
+    return np.dot(create_transformation_matrix(translation_vector,-rot_angles[1]), mark_to_ur)
 
 
 def main():
