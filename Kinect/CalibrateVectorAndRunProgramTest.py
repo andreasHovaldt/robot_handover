@@ -137,14 +137,16 @@ with(device.running()):
                         depth_X = int((keypoints[n].pt[0]-delta1)/3)
                         depth_Y = int((keypoints[n].pt[1] / 3) + delta2)
                         
-                        KH_transformation_matrix = matrix([0,0,0],np.round(depth_array[depth_Y,depth_X,:],3))
-                        print(f"Vector to hand: \n {np.round(depth_array[depth_Y,depth_X,:],3)}")  #Flip method: {currentFrame[abs(depth_Y-424),abs(depth_X-512)]}")
-                        print(f"KH matrix \n {KH_transformation_matrix}")
                         cv2.circle(currentFrame,((depth_X,depth_Y)),5,(0,0,0),4)
-                        print(f"UH matrix \n {np.dot(np.linalg.inv(KH_transformation_matrix),KU_transformation_matrix)}")
-                        print(f"This is KU:  \n  {KU_transformation_matrix}")
-                        #print(f"UH matrix45z \n {np.dot(np.linalg.inv(KH_transformation_matrix),KU_transformation_matrix)}")
+
+                        #create the vector to the hand in the kinect coor 
+                        kinect_to_hand_vector = np.round(depth_array[depth_Y,depth_X,:,1],3)
                         
+                        #using the transformation matrix found in the calibration the vector is found represnted in the ur coor 
+                        ur_to_hand_vector = np.dot(np.linalg.inv(KU_transformation_matrix), kinect_to_hand_vector)
+                        
+                        print(f"kinect to hand vector {kinect_to_hand_vector} \n ur to hand vector in ur coor {ur_to_hand_vector}")
+
                         
                 except:
                     #print("Hey")

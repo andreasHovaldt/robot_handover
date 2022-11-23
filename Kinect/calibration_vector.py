@@ -6,37 +6,43 @@ from detect_hand_as_blob import gloveDetector
 from math import cos, sin, radians
 
 
-X_ANGLE_SCALER = 0.1562500000
-Y_ANGLE_SCALER = 0.1415094340
 
-def trig(angle):
-    r = radians(angle)
-    return cos(r), sin(r)
+X_ANGLE_SCALER = 80/512
+Y_ANGLE_SCALER = 60/424
 
-def matrix(rotation, translation):
-    xC, xS = trig(rotation[0])
-    yC, yS = trig(rotation[1])
-    zC, zS = trig(rotation[2])
-    dX = translation[0]
-    dY = translation[1]
-    dZ = translation[2]
-    Translate_matrix = np.array([[1, 0, 0, dX],
-                                [0, 1, 0, dY],
-                                [0, 0, 1, dZ],
-                                [0, 0, 0, 1]])
-    Rotate_X_matrix = np.array([[1, 0, 0, 0],
-                                [0, xC, -xS, 0],
-                                [0, xS, xC, 0],
-                                [0, 0, 0, 1]])
-    Rotate_Y_matrix = np.array([[yC, 0, yS, 0],
-                                [0, 1, 0, 0],
-                                [-yS, 0, yC, 0],
-                                [0, 0, 0, 1]])
-    Rotate_Z_matrix = np.array([[zC, -zS, 0, 0],
-                                [zS, zC, 0, 0],
-                                [0, 0, 1, 0],
-                                [0, 0, 0, 1]])
-    return np.dot(np.dot(np.dot(Translate_matrix,Rotate_X_matrix),Rotate_Y_matrix),Rotate_Z_matrix)
+
+
+
+
+
+def create_transformation_matrix(translation_vector, rotation_y = 0, rotation_x = 0):
+    def trig(angle):
+        r = radians(angle)
+        return cos(r), sin(r)
+    #creates a rotation matrix around y with input deg 
+    def roty_matrix(rotation):
+        yC, yS = trig(rotation)
+        Rotate_Y_matrix = np.array([[yC, 0, yS, 0],
+                                    [0, 1, 0, 0],
+                                    [-yS, 0, yC, 0],
+                                    [0, 0, 0, 1]])
+        return Rotate_Y_matrix
+    def rotx_matrix(rotation):
+        xC, xS = trig(rotation)
+        Rotate_X_matrix = np.array([[1, 0, 0, 0],
+                                    [0, xC, -xS, 0],
+                                    [0, xS, xC, 0],
+                                    [0, 0, 0, 1]])
+        return Rotate_X_matrix
+    
+    transformation_matrix = np.identity(4)
+    print(translation_vector)
+    transformation_matrix[:,3] = translation_vector 
+    transformation_matrix[0:3,0:3]=roty_matrix(rotation_y)[0:3,0:3]
+    transformation_matrix = np.dot(transformation_matrix,rotx_matrix(rotation_x))
+    return transformation_matrix
+
+mark_to_ur = create_transformation_matrix(np.array([0,0,-0.10,1]),45,90)
 
 def calibrate_camera(color_image, depth_array):
     
@@ -87,8 +93,8 @@ def calibrate_camera(color_image, depth_array):
         rot_angles=[(depth_Y-212)*Y_ANGLE_SCALER,(depth_X-256)*X_ANGLE_SCALER,0]
         print(f"rot angles are {rot_angles} \n {depth_X , depth_Y}")
     #time.sleep(10)
-    
-    return matrix(rot_angles, translation_vector) 
+    translation_vector = np.c_[translation_vector, 1]
+    return np.dot(create_transformation_matrix(translation_vector,rot_angles[1]), mark_to_ur)
 
 
 def main():
