@@ -4,7 +4,7 @@ import glove_thresholde
 
 
 
-params = cv2.SimpleBlobDetector_Params()
+params = cv2.SimpleBlobDetector_Params() #Using Cv2 simple blob detector with params - Below are the parameters 
 #print(imgThresholded)
 
 #params.minThreshold = 0
@@ -65,17 +65,6 @@ def gloveDetector(image):
   
 
 
-# #------
-# # Detect blobs.
-# keypoints = detector.detect(imgThresholded)
-
-
-# # Draw detected blobs as red circles.
-
-# im_with_keypoints = cv2.drawKeypoints(img, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-
-# imgThresholded_with_keypoints = cv2.drawKeypoints(imgThresholded, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-# #---------
 
 
 def main():
