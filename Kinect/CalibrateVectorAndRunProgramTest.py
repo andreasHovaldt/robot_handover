@@ -8,6 +8,7 @@ import numpy as np
 import cv2
 from detect_hand_as_blob import gloveDetector
 from calibration_vector import calibrate_camera
+import depth_video
 
 
 HIGHFRAMERATE = 6 #Used to make a high framerate once calibration is finished
@@ -21,6 +22,7 @@ color_exist = False
 depth_exist = False
 calibration_exist = False
 calibration_vector = None 
+static_background = None
 
 
 #-------------------- Thresholding --------------------#
@@ -97,7 +99,6 @@ with(device.running()): #This is the loop that runs
                     currentFrame_color = cv2.resize(currentFrame_color,None,fx=0.6,fy=0.6,interpolation=cv2.INTER_LINEAR) #Resizer such that it doesn't fill your entire monitor
                     
                     cv2.imshow("Video", currentFrame_color)
-                    
                 
                     
                     
@@ -105,6 +106,14 @@ with(device.running()): #This is the loop that runs
                 
             
             
+        if type_ is fn2.FrameType.Depth:
+            #print("depth")
+
+            currentFrame_depth = frame
+
+            currentFrame = currentFrame_depth.to_array()
+            depth_image = np.array(currentFrame,np.uint16).reshape((424,512,1))
+            currentFrameIkkeArray = frame
         if type_ is fn2.FrameType.Depth: #This is the depth loop
             
 
@@ -122,6 +131,12 @@ with(device.running()): #This is the loop that runs
                 
                 depth_exist = True
             else: #Entering the "real" depth loop
+                only_human_image = depth_video.only_human(static_background, depth_image)
+                
+                if only_human_image[0] != False:
+                    print("human detected")
+                    cv2.imshow("only human", depth_video.conv2_8bit(only_human_image[1]))
+
                 try:
                     for n in range(len(pts)): #Map keypoints from RGB to depth
                         delta1_adv = - 0.02814 * keypoints[n].pt[0] - 0.00704* keypoints[n].pt[1] + 298.656 #Advanced formula for more "precise" mapping from RGB to depth
@@ -150,7 +165,7 @@ with(device.running()): #This is the loop that runs
                     continue
                 
                 
-                cv2.imshow("Depth", currentFrame)
+                cv2.imshow("Depth", depth_video.conv2_8bit(currentFrame))
             
         if color_exist and depth_exist and image_counter > 14 and calibration_exist != True: #On startup, these are false so enter this loop
             framerate = LOWFRAMERATE #Set lowframerate for calibration - Helps to make sure program doesn't crash
@@ -159,6 +174,8 @@ with(device.running()): #This is the loop that runs
             KU_transformation_matrix = calibration_result[0]
             base_coor = calibration_result[1]
             calibration_exist = True
+            
+            static_background = depth_video.create_static_backgound(depth_image)
             
             print(f"This is KU:  \n  {KU_transformation_matrix}")
             

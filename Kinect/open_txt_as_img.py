@@ -6,11 +6,11 @@ import scipy.signal
 import freenect2
 
 
-img = np.loadtxt("/home/alfred/Desktop/depth_txt/10.txt")
+img = np.loadtxt("Mats/DepthTxt/10.txt")
 
-rgb_img = cv2.imread("cameraTest_renamed/Kinect V2/0.jpg")
+rgb_img = cv2.imread("Mats/cameraTest/Kinect V2/0.jpg")
 
-frnct_img = freenect2.Registration(img, rgb_img)
+#frnct_img = freenect2.Registration(img, rgb_img)
 
 
 def median_blur(img, k_size):
