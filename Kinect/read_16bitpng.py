@@ -2,7 +2,7 @@ import png
 import numpy as np
 import cv2
 
-pngdata = png.Reader("foo_gray3.png").read_flat()
+pngdata = png.Reader("Mats/foo_gray3.png").read_flat()
 img = np.array(pngdata[2]).reshape((pngdata[1], pngdata[0], -1))
 
 print(img)
