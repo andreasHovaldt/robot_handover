@@ -117,9 +117,9 @@ def find_hand(img16):
         
         cv2.imshow("hand", cv2.circle(final,(hand_location[1],hand_location[0]),50,(0,0,255),-1))
         print(img16.shape)
-        return [hand_location[0:2],only_largest_blob]
+        return [hand_location[0:2],only_largest_blob,True]
     else:
-        return False
+        return [None, None, False]
 
 #create static backgound 
 def create_static_backgound(img16):
@@ -176,10 +176,10 @@ def only_human(background, img16):
 
     
     only_human = find_hand(human_filt)
-    print("only_human")
+    print("only_human 7y")
     
     correct_sized_image = np.zeros((424,512,1), np.uint16)
-    if only_human != False:
+    if only_human[2] != False:
         print("human found form depth videopy")
         print(f"only human shape{only_human[1].shape} cast shape {correct_sized_image[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP].shape}")
         correct_sized_image[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP] = only_human[1]

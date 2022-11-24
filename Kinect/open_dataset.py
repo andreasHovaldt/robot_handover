@@ -6,7 +6,8 @@ import numpy as np
 import cv2 
 import scipy.ndimage
 import time
-import create_transformatiom_matrix
+import map_color_to_depth
+import depth_video
 
 
 #load images into array
@@ -43,7 +44,7 @@ def conv2_8bit(img16):
 
 
 #create static backgound 
-static_backgound = depth_array[1]
+static_backgound = depth_video.create_static_backgound(depth_array[1])
 cropped_static_backgound = static_backgound[100:400,50:350]
 
 
@@ -60,14 +61,25 @@ while True:
         #depth_img = scipy.signal.medfilt2d(depth_img,3)
         
         
-        scaled_color = create_transformatiom_matrix.map_rgb_to_depth_size(color_img)
+        scaled_color = map_color_to_depth.map_rgb_to_depth_size(color_img)
         cv2.imshow("color", scaled_color)
-        depth_img = conv2_8bit(depth_img)
-        depth_img = depth_img.reshape((424,512))
-        depth_img = cv2.cvtColor(depth_img, cv2.COLOR_GRAY2BGR)
-        print(f"color scaled = {scaled_color.shape} \n depth = {depth_img.shape}")
-        added_image = cv2.addWeighted(scaled_color,0.4,depth_img,0.2,0)
+        depth_img8bit = conv2_8bit(depth_img)
+        depth_img8bit = depth_img8bit.reshape((424,512))
+        depth_img8bit = cv2.cvtColor(depth_img8bit, cv2.COLOR_GRAY2BGR)
+        print(f"color scaled = {scaled_color.shape} \n depth = {depth_img8bit.shape}")
+        added_image = cv2.addWeighted(scaled_color,0.4,depth_img8bit,0.2,0)
         cv2.imshow("added", added_image)
+
+        only_human = depth_video.only_human(static_backgound, depth_img)
+        if only_human[0]:
+            cv2.imshow("human depth", conv2_8bit(only_human[1]))
+            only_human8bit = cv2.cvtColor(depth_video.conv2_8bit(only_human[1]), cv2.COLOR_GRAY2BGR)
+            
+            only_human_mask = only_human8bit > 10
+            
+            empty = np.zeros_like(scaled_color)
+            empty[only_human_mask] = scaled_color[only_human_mask]
+            cv2.imshow("human only color", empty)
 
 
         #for r in range(10):
