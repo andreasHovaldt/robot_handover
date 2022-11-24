@@ -50,7 +50,7 @@ flat = depth_array.reshape(-1, depth_array.shape[-1])
 
 
 
-mask = flat[:,1] != np.nan
+#mask = flat[:,1] != np.nan
 flat = flat[~np.isnan(flat).any(axis=1)]
 print(f"max z{np.max(flat[:,2])}")
 print(f"len colar map{color_map_float.shape[0]}")
