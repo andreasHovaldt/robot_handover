@@ -86,6 +86,7 @@ with(device.running()): #This is the loop that runs
                         for n in range(len(pts)): #This loop attempts to draw a red circle around each of the detected keypoints
                             currentFrame_color = cv2.circle(currentFrame_color,(int(keypoints[n].pt[0]),int(keypoints[n].pt[1])),10,(0,0,255),4)
                             
+                            
                     except:
                         
                         continue
@@ -128,7 +129,8 @@ with(device.running()): #This is the loop that runs
                         depth_X = int((keypoints[n].pt[0]-delta1)/3) #Using formula to map RGB keypoint to depth
                         depth_Y = int((keypoints[n].pt[1] / 3) + delta2) #See above
                         
-                        cv2.circle(currentFrame,((depth_X,depth_Y)),5,(0,0,0),4) #Draw circle on depth
+                        cv2.circle(currentFrame,((depth_X,depth_Y)),5,(0,0,0),4) #Draw circle on depth'
+                        cv2.circle(currentFrame, ((base_coor[0],base_coor[1])),5, (0,0,0),4)
 
                         #Create the vector to the hand in the kinect coordinate system
                         kinect_to_hand_vector = np.append(np.round(depth_array[depth_Y,depth_X,:],3),[1])
@@ -136,7 +138,10 @@ with(device.running()): #This is the loop that runs
                         #Using the transformation matrix found in the calibration the vector is found represnted in the UR coordinate system 
                         ur_to_hand_vector = np.dot(np.linalg.inv(KU_transformation_matrix), kinect_to_hand_vector)
                         
-                        print(f"Kinect to hand vector {kinect_to_hand_vector} \n UR to hand vector in ur coor {ur_to_hand_vector}")
+                        #translation_vector = np.round(depth_array[depth_Y,depth_X,:],3)
+                        #translation_vector = np.append(translation_vector, [1])
+                        
+                        print(f"Kinect to hand vector {kinect_to_hand_vector} \n UR to hand vector in ur coor {ur_to_hand_vector} ")
                         
 
                         
@@ -150,10 +155,13 @@ with(device.running()): #This is the loop that runs
         if color_exist and depth_exist and image_counter > 14 and calibration_exist != True: #On startup, these are false so enter this loop
             framerate = LOWFRAMERATE #Set lowframerate for calibration - Helps to make sure program doesn't crash
             print("trying to calibrate")
-            KU_transformation_matrix = calibrate_camera(currentFrame_color, depth_array) #Obtain transformationmatrix from the Kinect to the UR
+            calibration_result = calibrate_camera(currentFrame_color, depth_array) #Obtain transformationmatrix from the Kinect to the UR
+            KU_transformation_matrix = calibration_result[0]
+            base_coor = calibration_result[1]
             calibration_exist = True
             
             print(f"This is KU:  \n  {KU_transformation_matrix}")
+            
 
            
 

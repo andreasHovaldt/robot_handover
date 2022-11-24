@@ -45,7 +45,7 @@ def create_transformation_matrix(translation_vector, rotation_y = 0, rotation_x 
 
 
 def calibrate_camera(color_image, depth_array): #Function used to calibrate our camera
-    mark_to_ur_translation = create_transformation_matrix(np.array([0,0,-0.17,1])) #Creating transformation from red dot to the UR robot
+    mark_to_ur_translation = create_transformation_matrix(np.array([0,0,-0.09,1])) #Creating transformation from red dot to the UR robot
     
     mark_to_ur_rotation_y = create_transformation_matrix(np.array([0,0,0,1]),45) #Creating the y rotation from red dot to UR
     mark_to_ur_rotation_x = create_transformation_matrix(np.array([0,0,0,1]),0,90) #Creating the x rotation from the red dot to the UR
@@ -97,11 +97,12 @@ def calibrate_camera(color_image, depth_array): #Function used to calibrate our 
         print(f"Calibration vector found to be: {translation_vector}")
         rot_angles=[(depth_Y-212)*Y_ANGLE_SCALER,(depth_X-256)*X_ANGLE_SCALER,0] #This is the amount of angles that the camera is turned compared to the calibration point
         print(f"rot angles are {rot_angles} \n {depth_X , depth_Y}")
+        CoordinateOfRed = [depth_X, depth_Y]
     #time.sleep(10)
     translation_vector = np.append(translation_vector, [1])
     print(f"translation_vector {translation_vector}")
     #return create_transformation_matrix(translation_vector,rot_angles[1])
-    return np.dot(create_transformation_matrix(translation_vector,-rot_angles[1]), mark_to_ur) #Transformationmatrix from Kinect to the UR
+    return [np.dot(create_transformation_matrix(translation_vector,-rot_angles[1]), mark_to_ur), CoordinateOfRed] #, translation_vector #Transformationmatrix from Kinect to the UR
 
 
 def main():
