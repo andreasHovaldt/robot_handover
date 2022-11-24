@@ -4,6 +4,7 @@ import cv2
 import time
 from detect_hand_as_blob import gloveDetector
 from calibration_vector import calibrate_camera
+import depth_video
 i = 0
 
 device = fn2.Device()
@@ -14,6 +15,7 @@ color_exist = False
 depth_exist = False
 calibration_exist = False
 calibration_vector = None 
+static_background = None
 #calibration_Vector = calibrate_camera()
 #print(calibration_Vector)
 #time.sleep(10)
@@ -109,6 +111,7 @@ with(device.running()):
             currentFrame_depth = frame
 
             currentFrame = currentFrame_depth.to_array()
+            depth_image = np.array(currentFrame,np.uint16).reshape((424,512,1))
             currentFrameIkkeArray = frame
             depth_array = device.registration.get_points_xyz_array(currentFrame_depth)
             #print(f"depth max: {currentFrame.max()}")
@@ -126,6 +129,12 @@ with(device.running()):
                 print(f"calibrating {image_counter}")
                 depth_exist = True
             else:
+                only_human_image = depth_video.only_human(static_background, depth_image)
+                
+                if only_human_image[0] != False:
+                    print("human detected")
+                    cv2.imshow("only human", depth_video.conv2_8bit(only_human_image[1]))
+
                 try:
                     for n in range(len(pts)):
                         delta1_adv = - 0.02814 * keypoints[n].pt[0] - 0.00704* keypoints[n].pt[1] + 298.656
@@ -145,12 +154,14 @@ with(device.running()):
                     continue
                 
                 
-                cv2.imshow("Depth", currentFrame)
+                cv2.imshow("Depth", depth_video.conv2_8bit(currentFrame))
             
         if color_exist and depth_exist and image_counter > 14 and calibration_exist != True:
             print("trying to calibrate")
             calibration_vector = calibrate_camera(currentFrame_color, depth_array)
             calibration_exist = True
+            
+            static_background = depth_video.create_static_backgound(depth_image)
                     
         K = cv2.waitKey(1)
         if K == 113:

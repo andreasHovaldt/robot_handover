@@ -198,7 +198,7 @@ with(device.running()):
                 
                 
                 print(f"depth max: {currentFrame.max()}")
-                image=np.array(currentFrame, np.uint16)
+                image=np.array(currentFrame, np.uint16).reshape((424,512,1))
                 cv2.imshow("test1 ",conv2_8bit(image))
                 #v2.waitKey()
                 #if first frame create bg 
@@ -211,8 +211,7 @@ with(device.running()):
                 else:
                     correct_sized_image = np.zeros_like(image.reshape((424,512,1)), np.uint16)
                     
-                    depth_img = image[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP].reshape((300,300,1))
-
+                    depth_img = image[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP]
                     #threshold the depth 
                     result = np.zeros_like(depth_img)
                     result2 = np.zeros_like(depth_img)

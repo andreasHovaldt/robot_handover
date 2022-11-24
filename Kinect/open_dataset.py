@@ -6,6 +6,8 @@ import numpy as np
 import cv2 
 import scipy.ndimage
 import time
+import create_transformatiom_matrix
+
 
 #load images into array
 def create_depth_img_array(path):
@@ -48,34 +50,24 @@ cropped_static_backgound = static_backgound[100:400,50:350]
 
 prev_time = time.time()
 while True:
-    for color_img, depth_img in zip(color_array, depth_array):
+    for color_img, depth_img in zip(color_array[0:110], depth_array[10:110]):
         #cv2.imshow("color", color_img) 
         #cv2.waitKey(10)
         depth_slice_list = [] 
+
         
         #cv2.imshow("start", conv2_8bit(depth_img))
         #depth_img = scipy.signal.medfilt2d(depth_img,3)
         
         
-        depth_img = depth_img[100:400,50:350]
-
-        result = np.zeros_like(depth_img)
-        result2 = np.zeros_like(depth_img)
-        mask1 = depth_img > 1200
-        mask2 = depth_img < 2400
-        
-        mask3 = mask1 == mask2 
-        result[mask3] = depth_img[mask3]
-        cv2.imshow("result1",conv2_8bit(result))
-        dil_img = cv2.dilate(conv2_8bit(result), np.ones((20,20)))
-        cv2.imshow("dil img ", dil_img)
-        mask4 = dil_img > 0
-        result2[mask4] = scipy.ndimage.median_filter(result[mask4],7)
-        #result = scipy.ndimage.median_filter(result,2)
-
-        cv2.imshow("result2",conv2_8bit(result2))
-
-        cv2.imshow("Canny",cv2.Canny(conv2_8bit(result2), 1, 2))
+        scaled_color = create_transformatiom_matrix.map_rgb_to_depth_size(color_img)
+        cv2.imshow("color", scaled_color)
+        depth_img = conv2_8bit(depth_img)
+        depth_img = depth_img.reshape((424,512))
+        depth_img = cv2.cvtColor(depth_img, cv2.COLOR_GRAY2BGR)
+        print(f"color scaled = {scaled_color.shape} \n depth = {depth_img.shape}")
+        added_image = cv2.addWeighted(scaled_color,0.4,depth_img,0.2,0)
+        cv2.imshow("added", added_image)
 
 
         #for r in range(10):
@@ -88,7 +80,7 @@ while True:
         #    depth_slice_list.append(result_array)
             
             #cv2.imshow(f"r{r}", conv2_8bit(result_array))
-        cv2.waitKey(1)
+        cv2.waitKey(50)
     print(f"time to proces 336 images = {time.time()-prev_time}")
     prev_time = time.time()
             
