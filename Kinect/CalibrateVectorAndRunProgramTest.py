@@ -134,8 +134,8 @@ with(device.running()):
                     for n in range(len(pts)):
                         delta1_adv = - 0.02814 * keypoints[n].pt[0] - 0.00704* keypoints[n].pt[1] + 298.656
                         delta2_adv = - 0.00190 * keypoints[n].pt[0] + 0.00971* keypoints[n].pt[1] + 26.472
-                        depth_X = int((keypoints[n].pt[0]-delta1)/3)
-                        depth_Y = int((keypoints[n].pt[1] / 3) + delta2)
+                        depth_X = int((keypoints[n].pt[0]-delta1_adv)/3)
+                        depth_Y = int((keypoints[n].pt[1] / 3) + delta2_adv)
                         
                         cv2.circle(currentFrame,((depth_X,depth_Y)),5,(0,0,0),4)
 
