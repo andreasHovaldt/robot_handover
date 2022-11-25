@@ -4,8 +4,8 @@ import cv2
 import scipy.ndimage
 import png 
 
-LOWER_DEPTH_THRESHOLD = 1200
-HIGHER_DEPTH_THESHOLD = 3000
+LOWER_DEPTH_THRESHOLD = 500
+HIGHER_DEPTH_THESHOLD = 4000
 
 HIGHER_Y_CROP = 400
 LOWER_Y_CROP = 50
@@ -47,7 +47,7 @@ def erode_dilate_noise_reduction(img16, ksize):
     return result
 
 def find_human_blob(img16):
-    print("find human")
+    #print("find human")
     params = cv2.SimpleBlobDetector_Params()
     
     params.filterByColor = True
@@ -69,7 +69,7 @@ def find_human_blob(img16):
     keypoints = detector.detect(img_thresh)
 
     img_with_keypoints = cv2.drawKeypoints(conv2_8bit(img16), keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS) 
-    cv2.imshow("img with key points", img_with_keypoints)
+    #cv2.imshow("img with key points", img_with_keypoints)
     if len(keypoints) != 0: 
         #print(keypoints[0].pt)
         return keypoints[0].pt
@@ -79,7 +79,7 @@ def find_human_blob(img16):
 
 
 def find_hand(img16):
-    print("find hand")
+    #print("find hand")
     #find human blob 
     
     human_location = find_human_blob(img16)
@@ -115,7 +115,7 @@ def find_hand(img16):
         #only_largest_blob = conv2_8bit_detailed(only_largest_blob)
         final = cv2.cvtColor(conv2_8bit_detailed(only_largest_blob),cv2.COLOR_GRAY2BGR)
         
-        cv2.imshow("hand", cv2.circle(final,(hand_location[1],hand_location[0]),50,(0,0,255),-1))
+        #cv2.imshow("hand", cv2.circle(final,(hand_location[1],hand_location[0]),50,(0,0,255),-1))
         print(img16.shape)
         return [hand_location[0:2],only_largest_blob,True]
     else:
@@ -123,7 +123,7 @@ def find_hand(img16):
 
 #create static backgound 
 def create_static_backgound(img16):
-    print(f"creating static backgound {img16.shape}")
+    #print(f"creating static backgound {img16.shape}")
     #we copy the imput
     img = img16
     #we crop the image to the size needed 
@@ -142,6 +142,7 @@ def create_static_backgound(img16):
 
 def only_human(background, img16):
     depth_img = img16[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP]
+    #print(f"cropped image shape {depth_img.shape}")
     #threshold the depth 
     result = np.zeros_like(depth_img)
     result2 = np.zeros_like(depth_img)
@@ -152,38 +153,40 @@ def only_human(background, img16):
     result[mask_total] = depth_img[mask_total]
 
     result2 = fast_median_noise_reduction(result, 20, (3))
-    cv2.imshow("result2",conv2_8bit(result2))
+    #print(f"result 2 \n {result2}")
+    #cv2.imshow("result2",conv2_8bit(result2))
 
     #bg subtraction 
     np_no_bg = np.subtract(np.array(result2, np.int16), background) #dont subtract with uint
     np_no_bg = np.array(np.absolute(np_no_bg), np.uint16)
-    print("bg subtracted 1")
-    cv2.imshow("np_no_bg", conv2_8bit(np_no_bg))
-    print(f"no bg shape {np_no_bg.shape}")
+    #print("bg subtracted 1")
+    #cv2.imshow("np_no_bg", conv2_8bit(np_no_bg))
+    #print(f"no bg shape {np_no_bg.shape}")
     human = np.zeros_like(np_no_bg)
     
 
     mask = np_no_bg > 200        
-    print("test test ")
-    print(f"result2 \n {result2.shape}")
-    print(f"human \n {human.shape}")
+    #print("test test ")
+    #print(f"result2 \n {result2.shape}")
+    #print(f"human \n {human.shape}")
     human[mask] = result2[mask]
-    print("bg subtracted 2")
+    #print("bg subtracted 2")
     #cv2.imshow("human",conv2_8bit(human))
 
 
-    human_filt = fast_median_noise_reduction(human,30,(3))
+    #human_filt = fast_median_noise_reduction(human,30,(3))
 
     
-    only_human = find_hand(human_filt)
-    print("only_human 7y")
+    only_human = find_hand(human)
+    #print("only_human 7y")
     
     correct_sized_image = np.zeros((424,512,1), np.uint16)
     if only_human[2] != False:
-        print("human found form depth videopy")
-        print(f"only human shape{only_human[1].shape} cast shape {correct_sized_image[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP].shape}")
+        #print("human found form depth videopy")
+        #print(f"only human shape{only_human[1].shape} cast shape {correct_sized_image[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP].shape}")
         correct_sized_image[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP] = only_human[1]
         cv2.imshow("correct_size_only_human", conv2_8bit(correct_sized_image))
         return [True, correct_sized_image]
     else: 
+        print("no human")
         return [False, correct_sized_image]

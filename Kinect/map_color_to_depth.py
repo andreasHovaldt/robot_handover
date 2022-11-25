@@ -8,6 +8,7 @@ def map_rgb_to_depth_size(rgb_image):
     v_shift = -5
     h_shift = 15
     rgb = rgb_image
+    print(f"inpu shape {rgb.shape}")
     rgb_crop_x = rgb[:, delta1+h_shift:1920-(delta1-h_shift)]
     resized_rgb = cv2.resize(rgb_crop_x, (512,424-delta2*2))
     print(f"shape first step {resized_rgb.shape}")

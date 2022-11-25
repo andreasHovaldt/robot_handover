@@ -88,23 +88,27 @@ def calibrate_camera(color_image, depth_array): #Function used to calibrate our 
 
     pts = cv2.KeyPoint.convert(keypoints)
     print(f"points {pts}")
-    
-    for n in range(len(pts)):
-        print("locating keypoints on depth map")
-        depth_X = int((keypoints[n].pt[0]-delta1)/3)
-        depth_Y = int((keypoints[n].pt[1] / 3) + delta2)
-        translation_vector = np.round(depth_array[depth_Y,depth_X,:],3)
-        print(f"Calibration vector found to be: {translation_vector}")
-        rot_angles=[(depth_Y-212)*Y_ANGLE_SCALER,(depth_X-256)*X_ANGLE_SCALER,0] #This is the amount of angles that the camera is turned compared to the calibration point
-        print(f"rot angles are {rot_angles} \n {depth_X , depth_Y}")
-        CoordinateOfRed = [depth_X, depth_Y]
-    #time.sleep(10)
-    translation_vector = np.append(translation_vector, [1])
-    print(f"translation_vector {translation_vector}")
-    #return create_transformation_matrix(translation_vector,rot_angles[1])
-    return [np.dot(create_transformation_matrix(translation_vector,-rot_angles[1]), mark_to_ur), CoordinateOfRed] #, translation_vector #Transformationmatrix from Kinect to the UR
-
-
+    if len(pts) != 0:
+        for n in range(len(pts)):
+            print("locating keypoints on depth map")
+            depth_X = int((keypoints[n].pt[0]-delta1)/3)
+            depth_Y = int((keypoints[n].pt[1] / 3) + delta2)
+            translation_vector = np.round(depth_array[depth_Y,depth_X,:],3)
+            print(f"Calibration vector found to be: {translation_vector}")
+            rot_angles=[(depth_Y-212)*Y_ANGLE_SCALER,(depth_X-256)*X_ANGLE_SCALER,0] #This is the amount of angles that the camera is turned compared to the calibration point
+            print(f"rot angles are {rot_angles} \n {depth_X , depth_Y}")
+            CoordinateOfRed = [depth_X, depth_Y]
+        #time.sleep(10)
+        translation_vector = np.append(translation_vector, [1])
+        print(f"translation_vector {translation_vector}")
+        KU_transformation_matrix = np.dot(create_transformation_matrix(translation_vector,-rot_angles[1]),mark_to_ur)
+        if (np.isnan(KU_transformation_matrix).any()):
+            return [False,False,False]
+        else:
+            return [KU_transformation_matrix, CoordinateOfRed, True] #, translation_vector #Transformationmatrix from Kinect to the UR
+    else: 
+        return [False,False,False]
+        
 def main():
     calibrate_camera()
 

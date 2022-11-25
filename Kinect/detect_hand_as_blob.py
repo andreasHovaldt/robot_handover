@@ -11,7 +11,7 @@ params = cv2.SimpleBlobDetector_Params() #Using Cv2 simple blob detector with pa
 #params.maxThreshold = 255
 
 # Filter by Area.
-params.filterByArea = True
+params.filterByArea = False
 params.minArea = 1000
 params.maxArea = 50000
 
