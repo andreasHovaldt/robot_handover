@@ -10,13 +10,14 @@ from detect_hand_as_blob import gloveDetector
 from calibration_vector import calibrate_camera
 import depth_video
 import map_color_to_depth
+from threading import Thread
 
 
 HIGHFRAMERATE = 6 #Used to make a high framerate once calibration is finished - 6 is high value, can make higher val for slower program
 LOWFRAMERATE = 30 #Used to make a low framerate to make sure program doesn't crash during calibration.
 i = 0
 framerate = LOWFRAMERATE #Start off with low framerate
-device = fn2.Device()
+
  
 #Setting some values to False such that the calibration will run
 color_exist = False
@@ -24,6 +25,10 @@ depth_exist = False
 calibration_exist = False
 calibration_vector = None 
 static_background = None
+
+depth_image = None 
+depth_point_array = None
+color_image = None
 
 
 #-------------------- Thresholding --------------------#
@@ -42,30 +47,34 @@ erode_kernel = np.ones((3,3), np.uint8) #Kernel used for erosion
 
 #-------------------- Loop --------------------#
 
-image_counter = 0
-with(device.running()): #This is the loop that runs
-    device.start()
-    
-    for type_, frame in device: #The KinevtV2 returns both the Color frametype and the Depth frametype, so we have to seperate these
-        
-        #get the color frame and pre-process  
-        if type_ is fn2.FrameType.Color:
-            #print("color")
-            currentFrame = frame #Frame is what the camera returns
-            color_image = currentFrame.to_array() #We convert the frame into an array to change the datatype, and can now easily show the frame                
-            color_exist = True 
-        
-        #get the depth frame and pre-process 
-        if type_ is fn2.FrameType.Depth: #This is the depth loop
-            #print("depth")
-            currentFrame_depth = frame #Frame is what the camera return
-            depth_image = currentFrame_depth.to_array() #Convert frame to an array to change datatype, can now easily show frames
-            depth_image = np.array(depth_image,np.uint16).reshape((424,512,1)) #needed shape for depth_video.py 
-            depth_point_array = device.registration.get_points_xyz_array(currentFrame_depth)#creates the point cloud 
-            depth_exist = True
-            
 
-        #calibrate the kinect    
+image_counter = 0
+def run_camera():
+    device = fn2.Device()
+    with(device.running()): #This is the loop that runs
+        device.start()
+        
+        for type_, frame in device: #The KinevtV2 returns both the Color frametype and the Depth frametype, so we have to seperate these
+            
+            #get the color frame and pre-process  
+            if type_ is fn2.FrameType.Color:
+                #print("color")
+                currentFrame = frame #Frame is what the camera returns
+                color_image = currentFrame.to_array() #We convert the frame into an array to change the datatype, and can now easily show the frame                
+                color_exist = True 
+            
+            #get the depth frame and pre-process 
+            if type_ is fn2.FrameType.Depth: #This is the depth loop
+                #print("depth")
+                currentFrame_depth = frame #Frame is what the camera return
+                depth_image = currentFrame_depth.to_array() #Convert frame to an array to change datatype, can now easily show frames
+                depth_image = np.array(depth_image,np.uint16).reshape((424,512,1)) #needed shape for depth_video.py 
+                depth_point_array = device.registration.get_points_xyz_array(currentFrame_depth)#creates the point cloud 
+                depth_exist = True
+                
+
+def image_processing():
+    while True:   
         if color_exist and depth_exist and calibration_exist != True: #On startup, these are false so enter this loop
             framerate = LOWFRAMERATE #Set lowframerate for calibration - Helps to make sure program doesn't crash
             print("trying to calibrate")
@@ -145,6 +154,14 @@ with(device.running()): #This is the loop that runs
         K = cv2.waitKey(1)
         if K == 113: #Press Q to close program
             break
+
+if __name__ == "main":
+    a = Thread(target=run_camera)
+    b = Thread(target=image_processing)
+    a.start()
+    b.start()
+
+
 
 
 cv2.destroyAllWindows()
