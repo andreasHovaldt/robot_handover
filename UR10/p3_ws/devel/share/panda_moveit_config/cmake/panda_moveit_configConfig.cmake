@@ -1,0 +1,1 @@
+/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/panda_moveit_config/share/panda_moveit_config/cmake/panda_moveit_configConfig.cmake

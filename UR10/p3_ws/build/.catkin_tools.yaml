@@ -1,0 +1,6 @@
+devel_space: /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel
+install: false
+install_space: /home/morten/UNI/P3/robot_handover/UR10/p3_ws/install
+profile: default
+source_space: /home/morten/UNI/P3/robot_handover/UR10/p3_ws/src
+workspace: /home/morten/UNI/P3/robot_handover/UR10/p3_ws

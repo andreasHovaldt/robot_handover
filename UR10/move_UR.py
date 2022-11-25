@@ -1,5 +1,5 @@
-# :)
 #!/usr/bin/env python
+# No commenting before shebang :'() <-B
 
 # -- BEGIN LICENSE BLOCK ----------------------------------------------
 # Copyright 2021 FZI Forschungszentrum Informatik

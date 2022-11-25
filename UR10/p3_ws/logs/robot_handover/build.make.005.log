@@ -1,0 +1,12 @@
+[  0%] Built target geometry_msgs_generate_messages_cpp
+[  0%] Built target geometry_msgs_generate_messages_eus
+[  0%] Built target geometry_msgs_generate_messages_nodejs
+[  0%] Built target geometry_msgs_generate_messages_py
+[  0%] Built target geometry_msgs_generate_messages_lisp
+[  0%] Built target _robot_handover_generate_messages_check_deps_position
+[ 57%] Built target robot_handover_generate_messages_lisp
+[ 57%] Built target robot_handover_generate_messages_cpp
+[ 57%] Built target robot_handover_generate_messages_py
+[ 71%] Built target robot_handover_generate_messages_nodejs
+[100%] Built target robot_handover_generate_messages_eus
+[100%] Built target robot_handover_generate_messages

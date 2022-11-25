@@ -1,0 +1,1 @@
+/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/moveit_msgs/share/roseus/ros/moveit_msgs/msg/PlannerParams.l

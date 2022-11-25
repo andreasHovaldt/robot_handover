@@ -1,0 +1,2 @@
+moveit_resources/moveit_resources
+/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/moveit_resources/cmake.lock /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/./cmake.lock

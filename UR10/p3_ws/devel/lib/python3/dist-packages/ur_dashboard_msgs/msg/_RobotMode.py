@@ -1,0 +1,1 @@
+/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/ur_dashboard_msgs/lib/python3/dist-packages/ur_dashboard_msgs/msg/_RobotMode.py

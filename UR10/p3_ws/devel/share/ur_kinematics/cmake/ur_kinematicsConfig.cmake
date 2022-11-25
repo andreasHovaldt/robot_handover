@@ -1,0 +1,1 @@
+/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/ur_kinematics/share/ur_kinematics/cmake/ur_kinematicsConfig.cmake

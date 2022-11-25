@@ -1,0 +1,43 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_planners/chomp/chomp_motion_planner/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/Universal_Robots_ROS_Driver/controller_stopper/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/geometric_shapes/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_planners/chomp/chomp_interface/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_resources/prbt_ikfast_manipulator_plugin/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/benchmarks/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_plugins/moveit_ros_control_interface/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/move_group/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/occupancy_map_monitor/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/robot_interaction/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/moveit_servo/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_setup_assistant/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_plugins/moveit_simple_controller_manager/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_visual_tools/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_planners/pilz_industrial_motion_planner/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_planners/pilz_industrial_motion_planner_testutils/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/robot_handover/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/rviz_visual_tools/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/srdfdom/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/Universal_Robots_ROS_Driver/ur_calibration/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/universal_robot/ur_kinematics/include/**",
+        "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/Universal_Robots_ROS_Driver/ur_robot_driver/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

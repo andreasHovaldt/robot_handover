@@ -1,0 +1,1 @@
+/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/ur_description/share/ur_description/cmake/ur_descriptionConfig.cmake

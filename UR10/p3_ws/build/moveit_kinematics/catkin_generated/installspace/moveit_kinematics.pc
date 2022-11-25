@@ -1,0 +1,8 @@
+prefix=/home/morten/UNI/P3/robot_handover/UR10/p3_ws/install
+
+Name: moveit_kinematics
+Description: Description of moveit_kinematics
+Version: 1.1.10
+Cflags: -I${prefix}/include -I/usr/include/eigen3
+Libs: -L${prefix}/lib 
+Requires: moveit_core pluginlib roscpp

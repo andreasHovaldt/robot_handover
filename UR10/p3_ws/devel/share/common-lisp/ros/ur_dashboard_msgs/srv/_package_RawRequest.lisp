@@ -1,0 +1,1 @@
+/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/ur_dashboard_msgs/share/common-lisp/ros/ur_dashboard_msgs/srv/_package_RawRequest.lisp

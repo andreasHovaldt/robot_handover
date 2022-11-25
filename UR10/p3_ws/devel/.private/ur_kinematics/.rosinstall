@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/ur_kinematics/setup.sh

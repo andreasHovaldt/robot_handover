@@ -1,0 +1,1 @@
+/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/robot_handover/lib/robot_handover/move_group_python.py

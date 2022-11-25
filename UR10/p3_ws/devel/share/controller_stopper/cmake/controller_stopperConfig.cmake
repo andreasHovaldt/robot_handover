@@ -1,0 +1,1 @@
+/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/controller_stopper/share/controller_stopper/cmake/controller_stopperConfig.cmake

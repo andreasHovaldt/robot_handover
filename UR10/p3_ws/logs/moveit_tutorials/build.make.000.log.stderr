@@ -1,0 +1,211 @@
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:[m[K In function ‘[01m[Kint main(int, char**)[m[K’:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:95:55:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::trajectory[m[K’ is deprecated: Use trajectory_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+   95 |     visual_tools.publishTrajectoryLine(plan_solution1.[01;35m[Ktrajectory[m[K, joint_model_group_ptr);
+      |                                                       [01;35m[K^~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:54:90:[m[K [01;36m[Knote: [m[Kdeclared here
+   54 |   [[deprecated("Use trajectory_ instead.")]] const robot_trajectory::RobotTrajectoryPtr& [01;36m[Ktrajectory[m[K;
+      |                                                                                          [01;36m[K^~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:95:55:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::trajectory[m[K’ is deprecated: Use trajectory_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+   95 |     visual_tools.publishTrajectoryLine(plan_solution1.[01;35m[Ktrajectory[m[K, joint_model_group_ptr);
+      |                                                       [01;35m[K^~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:54:90:[m[K [01;36m[Knote: [m[Kdeclared here
+   54 |   [[deprecated("Use trajectory_ instead.")]] const robot_trajectory::RobotTrajectoryPtr& [01;36m[Ktrajectory[m[K;
+      |                                                                                          [01;36m[K^~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:95:55:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::trajectory[m[K’ is deprecated: Use trajectory_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+   95 |     visual_tools.publishTrajectoryLine(plan_solution1.[01;35m[Ktrajectory[m[K, joint_model_group_ptr);
+      |                                                       [01;35m[K^~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:54:90:[m[K [01;36m[Knote: [m[Kdeclared here
+   54 |   [[deprecated("Use trajectory_ instead.")]] const robot_trajectory::RobotTrajectoryPtr& [01;36m[Ktrajectory[m[K;
+      |                                                                                          [01;36m[K^~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:134:60:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::start_state[m[K’ is deprecated: Use start_state_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+  134 |     moveit::core::robotStateMsgToRobotState(plan_solution2.[01;35m[Kstart_state[m[K, robot_state);
+      |                                                            [01;35m[K^~~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:57:78:[m[K [01;36m[Knote: [m[Kdeclared here
+   57 |   [[deprecated("Use start_state_ instead.")]] const moveit_msgs::RobotState& [01;36m[Kstart_state[m[K;
+      |                                                                              [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:134:60:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::start_state[m[K’ is deprecated: Use start_state_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+  134 |     moveit::core::robotStateMsgToRobotState(plan_solution2.[01;35m[Kstart_state[m[K, robot_state);
+      |                                                            [01;35m[K^~~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:57:78:[m[K [01;36m[Knote: [m[Kdeclared here
+   57 |   [[deprecated("Use start_state_ instead.")]] const moveit_msgs::RobotState& [01;36m[Kstart_state[m[K;
+      |                                                                              [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:134:60:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::start_state[m[K’ is deprecated: Use start_state_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+  134 |     moveit::core::robotStateMsgToRobotState(plan_solution2.[01;35m[Kstart_state[m[K, robot_state);
+      |                                                            [01;35m[K^~~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:57:78:[m[K [01;36m[Knote: [m[Kdeclared here
+   57 |   [[deprecated("Use start_state_ instead.")]] const moveit_msgs::RobotState& [01;36m[Kstart_state[m[K;
+      |                                                                              [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:140:55:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::trajectory[m[K’ is deprecated: Use trajectory_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+  140 |     visual_tools.publishTrajectoryLine(plan_solution2.[01;35m[Ktrajectory[m[K, joint_model_group_ptr);
+      |                                                       [01;35m[K^~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:54:90:[m[K [01;36m[Knote: [m[Kdeclared here
+   54 |   [[deprecated("Use trajectory_ instead.")]] const robot_trajectory::RobotTrajectoryPtr& [01;36m[Ktrajectory[m[K;
+      |                                                                                          [01;36m[K^~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:140:55:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::trajectory[m[K’ is deprecated: Use trajectory_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+  140 |     visual_tools.publishTrajectoryLine(plan_solution2.[01;35m[Ktrajectory[m[K, joint_model_group_ptr);
+      |                                                       [01;35m[K^~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:54:90:[m[K [01;36m[Knote: [m[Kdeclared here
+   54 |   [[deprecated("Use trajectory_ instead.")]] const robot_trajectory::RobotTrajectoryPtr& [01;36m[Ktrajectory[m[K;
+      |                                                                                          [01;36m[K^~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:140:55:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::trajectory[m[K’ is deprecated: Use trajectory_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+  140 |     visual_tools.publishTrajectoryLine(plan_solution2.[01;35m[Ktrajectory[m[K, joint_model_group_ptr);
+      |                                                       [01;35m[K^~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:54:90:[m[K [01;36m[Knote: [m[Kdeclared here
+   54 |   [[deprecated("Use trajectory_ instead.")]] const robot_trajectory::RobotTrajectoryPtr& [01;36m[Ktrajectory[m[K;
+      |                                                                                          [01;36m[K^~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:179:60:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::start_state[m[K’ is deprecated: Use start_state_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+  179 |     moveit::core::robotStateMsgToRobotState(plan_solution3.[01;35m[Kstart_state[m[K, robot_state);
+      |                                                            [01;35m[K^~~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:57:78:[m[K [01;36m[Knote: [m[Kdeclared here
+   57 |   [[deprecated("Use start_state_ instead.")]] const moveit_msgs::RobotState& [01;36m[Kstart_state[m[K;
+      |                                                                              [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:179:60:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::start_state[m[K’ is deprecated: Use start_state_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+  179 |     moveit::core::robotStateMsgToRobotState(plan_solution3.[01;35m[Kstart_state[m[K, robot_state);
+      |                                                            [01;35m[K^~~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:57:78:[m[K [01;36m[Knote: [m[Kdeclared here
+   57 |   [[deprecated("Use start_state_ instead.")]] const moveit_msgs::RobotState& [01;36m[Kstart_state[m[K;
+      |                                                                              [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:179:60:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::start_state[m[K’ is deprecated: Use start_state_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+  179 |     moveit::core::robotStateMsgToRobotState(plan_solution3.[01;35m[Kstart_state[m[K, robot_state);
+      |                                                            [01;35m[K^~~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:57:78:[m[K [01;36m[Knote: [m[Kdeclared here
+   57 |   [[deprecated("Use start_state_ instead.")]] const moveit_msgs::RobotState& [01;36m[Kstart_state[m[K;
+      |                                                                              [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:185:55:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::trajectory[m[K’ is deprecated: Use trajectory_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+  185 |     visual_tools.publishTrajectoryLine(plan_solution3.[01;35m[Ktrajectory[m[K, joint_model_group_ptr);
+      |                                                       [01;35m[K^~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:54:90:[m[K [01;36m[Knote: [m[Kdeclared here
+   54 |   [[deprecated("Use trajectory_ instead.")]] const robot_trajectory::RobotTrajectoryPtr& [01;36m[Ktrajectory[m[K;
+      |                                                                                          [01;36m[K^~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:185:55:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::trajectory[m[K’ is deprecated: Use trajectory_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+  185 |     visual_tools.publishTrajectoryLine(plan_solution3.[01;35m[Ktrajectory[m[K, joint_model_group_ptr);
+      |                                                       [01;35m[K^~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:54:90:[m[K [01;36m[Knote: [m[Kdeclared here
+   54 |   [[deprecated("Use trajectory_ instead.")]] const robot_trajectory::RobotTrajectoryPtr& [01;36m[Ktrajectory[m[K;
+      |                                                                                          [01;36m[K^~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:185:55:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::trajectory[m[K’ is deprecated: Use trajectory_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+  185 |     visual_tools.publishTrajectoryLine(plan_solution3.[01;35m[Ktrajectory[m[K, joint_model_group_ptr);
+      |                                                       [01;35m[K^~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:54:90:[m[K [01;36m[Knote: [m[Kdeclared here
+   54 |   [[deprecated("Use trajectory_ instead.")]] const robot_trajectory::RobotTrajectoryPtr& [01;36m[Ktrajectory[m[K;
+      |                                                                                          [01;36m[K^~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:222:60:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::start_state[m[K’ is deprecated: Use start_state_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+  222 |     moveit::core::robotStateMsgToRobotState(plan_solution4.[01;35m[Kstart_state[m[K, robot_state);
+      |                                                            [01;35m[K^~~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:57:78:[m[K [01;36m[Knote: [m[Kdeclared here
+   57 |   [[deprecated("Use start_state_ instead.")]] const moveit_msgs::RobotState& [01;36m[Kstart_state[m[K;
+      |                                                                              [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:222:60:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::start_state[m[K’ is deprecated: Use start_state_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+  222 |     moveit::core::robotStateMsgToRobotState(plan_solution4.[01;35m[Kstart_state[m[K, robot_state);
+      |                                                            [01;35m[K^~~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:57:78:[m[K [01;36m[Knote: [m[Kdeclared here
+   57 |   [[deprecated("Use start_state_ instead.")]] const moveit_msgs::RobotState& [01;36m[Kstart_state[m[K;
+      |                                                                              [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:222:60:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::start_state[m[K’ is deprecated: Use start_state_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+  222 |     moveit::core::robotStateMsgToRobotState(plan_solution4.[01;35m[Kstart_state[m[K, robot_state);
+      |                                                            [01;35m[K^~~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:57:78:[m[K [01;36m[Knote: [m[Kdeclared here
+   57 |   [[deprecated("Use start_state_ instead.")]] const moveit_msgs::RobotState& [01;36m[Kstart_state[m[K;
+      |                                                                              [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:228:55:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::trajectory[m[K’ is deprecated: Use trajectory_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+  228 |     visual_tools.publishTrajectoryLine(plan_solution4.[01;35m[Ktrajectory[m[K, joint_model_group_ptr);
+      |                                                       [01;35m[K^~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:54:90:[m[K [01;36m[Knote: [m[Kdeclared here
+   54 |   [[deprecated("Use trajectory_ instead.")]] const robot_trajectory::RobotTrajectoryPtr& [01;36m[Ktrajectory[m[K;
+      |                                                                                          [01;36m[K^~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:228:55:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::trajectory[m[K’ is deprecated: Use trajectory_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+  228 |     visual_tools.publishTrajectoryLine(plan_solution4.[01;35m[Ktrajectory[m[K, joint_model_group_ptr);
+      |                                                       [01;35m[K^~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:54:90:[m[K [01;36m[Knote: [m[Kdeclared here
+   54 |   [[deprecated("Use trajectory_ instead.")]] const robot_trajectory::RobotTrajectoryPtr& [01;36m[Ktrajectory[m[K;
+      |                                                                                          [01;36m[K^~~~~~~~~~[m[K
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:228:55:[m[K [01;35m[Kwarning: [m[K‘[01m[Kplanning_interface::MotionPlanResponse::trajectory[m[K’ is deprecated: Use trajectory_ instead. [[01;35m[K-Wdeprecated-declarations[m[K]
+  228 |     visual_tools.publishTrajectoryLine(plan_solution4.[01;35m[Ktrajectory[m[K, joint_model_group_ptr);
+      |                                                       [01;35m[K^~~~~~~~~~[m[K
+In file included from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_interface.h:41[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/planning_pipeline/include/moveit/planning_pipeline/planning_pipeline.h:39[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/planning/moveit_cpp/include/moveit/moveit_cpp/moveit_cpp.h:44[m[K,
+                 from [01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit_tutorials/doc/moveit_cpp/src/moveit_cpp_tutorial.cpp:4[m[K:
+[01m[K/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_core/planning_interface/include/moveit/planning_interface/planning_response.h:54:90:[m[K [01;36m[Knote: [m[Kdeclared here
+   54 |   [[deprecated("Use trajectory_ instead.")]] const robot_trajectory::RobotTrajectoryPtr& [01;36m[Ktrajectory[m[K;
+      |                                                                                          [01;36m[K^~~~~~~~~~[m[K

@@ -1,0 +1,8 @@
+prefix=/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/moveit_ros_robot_interaction
+
+Name: moveit_ros_robot_interaction
+Description: Description of moveit_ros_robot_interaction
+Version: 1.1.10
+Cflags: -I/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_ros/robot_interaction/include
+Libs: -L${prefix}/lib -lmoveit_robot_interaction
+Requires: interactive_markers moveit_ros_planning roscpp tf2_geometry_msgs

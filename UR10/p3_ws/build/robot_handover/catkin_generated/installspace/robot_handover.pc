@@ -1,0 +1,8 @@
+prefix=/home/morten/UNI/P3/robot_handover/UR10/p3_ws/install
+
+Name: robot_handover
+Description: Description of robot_handover
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -lrobot_handover
+Requires: geometry_msgs moveit_commander moveit_msgs roscpp rospy std_msgs message_runtime

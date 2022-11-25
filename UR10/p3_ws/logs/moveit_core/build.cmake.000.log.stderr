@@ -1,0 +1,2 @@
+TODO: Analyse and fix gcc's maybe-uninitialized warnings
+moveit_core: You did not request a specific build type: Choosing 'Release' for maximum performance

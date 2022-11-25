@@ -1,0 +1,1 @@
+/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/ur16e_moveit_config/share/ur16e_moveit_config/cmake/ur16e_moveit_configConfig.cmake

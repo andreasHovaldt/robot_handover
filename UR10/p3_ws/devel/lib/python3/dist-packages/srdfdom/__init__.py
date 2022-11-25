@@ -1,0 +1,1 @@
+/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/srdfdom/lib/python3/dist-packages/srdfdom/__init__.py

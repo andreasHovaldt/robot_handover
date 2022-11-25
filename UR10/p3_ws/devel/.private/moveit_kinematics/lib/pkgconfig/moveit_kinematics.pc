@@ -1,0 +1,8 @@
+prefix=/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/moveit_kinematics
+
+Name: moveit_kinematics
+Description: Description of moveit_kinematics
+Version: 1.1.10
+Cflags: -I/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_kinematics/kdl_kinematics_plugin/include -I/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_kinematics/lma_kinematics_plugin/include -I/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_kinematics/srv_kinematics_plugin/include -I/home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/moveit/moveit_kinematics/cached_ik_kinematics_plugin/include -I/usr/include/eigen3
+Libs: -L${prefix}/lib 
+Requires: moveit_core pluginlib roscpp

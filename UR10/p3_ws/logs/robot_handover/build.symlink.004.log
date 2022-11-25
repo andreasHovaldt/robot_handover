@@ -1,0 +1,22 @@
+Symlinking /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/lib/python3/dist-packages/robot_handover/__init__.py
+Symlinking /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/lib/python3/dist-packages/robot_handover/msg/_position.py
+Symlinking /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/lib/python3/dist-packages/robot_handover/msg/__init__.py
+Linked: (/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/robot_handover/lib/pkgconfig/robot_handover.pc, /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/lib/pkgconfig/robot_handover.pc)
+Linked: (/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/robot_handover/lib/robot_handover/talker.py, /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/lib/robot_handover/talker.py)
+Linked: (/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/robot_handover/lib/robot_handover/move_ur.py, /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/lib/robot_handover/move_ur.py)
+Linked: (/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/robot_handover/lib/robot_handover/move_group_python.py, /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/lib/robot_handover/move_group_python.py)
+Linked: (/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/robot_handover/lib/robot_handover/cmake.lock, /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/lib/robot_handover/cmake.lock)
+Symlinking /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/include/robot_handover/position.h
+Symlinking /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/share/gennodejs/ros/robot_handover/_index.js
+Symlinking /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/share/gennodejs/ros/robot_handover/msg/position.js
+Symlinking /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/share/gennodejs/ros/robot_handover/msg/_index.js
+Symlinking /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/share/common-lisp/ros/robot_handover/msg/robot_handover-msg.asd
+Symlinking /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/share/common-lisp/ros/robot_handover/msg/position.lisp
+Symlinking /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/share/common-lisp/ros/robot_handover/msg/_package.lisp
+Symlinking /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/share/common-lisp/ros/robot_handover/msg/_package_position.lisp
+Symlinking /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/share/roseus/ros/robot_handover/manifest.l
+Symlinking /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/share/roseus/ros/robot_handover/msg/position.l
+Symlinking /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/share/robot_handover/cmake/robot_handover-msg-paths.cmake
+Linked: (/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/robot_handover/share/robot_handover/cmake/robot_handoverConfig.cmake, /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/share/robot_handover/cmake/robot_handoverConfig.cmake)
+Linked: (/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/robot_handover/share/robot_handover/cmake/robot_handoverConfig-version.cmake, /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/share/robot_handover/cmake/robot_handoverConfig-version.cmake)
+Symlinking /home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/share/robot_handover/cmake/robot_handover-msg-extras.cmake

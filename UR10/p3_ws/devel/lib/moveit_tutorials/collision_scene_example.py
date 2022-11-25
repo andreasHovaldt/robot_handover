@@ -1,0 +1,1 @@
+/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/moveit_tutorials/lib/moveit_tutorials/collision_scene_example.py

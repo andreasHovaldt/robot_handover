@@ -1,0 +1,1 @@
+/home/morten/UNI/P3/robot_handover/UR10/p3_ws/devel/.private/moveit_resources_prbt_pg70_support/share/moveit_resources_prbt_pg70_support/cmake/moveit_resources_prbt_pg70_supportConfig.cmake

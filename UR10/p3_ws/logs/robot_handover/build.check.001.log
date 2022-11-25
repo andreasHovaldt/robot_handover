@@ -1,0 +1,8 @@
+[31m[1mCMake Error[0m at /home/morten/UNI/P3/robot_handover/UR10/p3_ws/src/robot_handover/CMakeLists.txt:165:
+  Parse error.  Function missing ending ")".  End of file reached.
+
+
+[36m--[0m Configuring incomplete, errors occurred!
+See also "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/build/robot_handover/CMakeFiles/CMakeOutput.log".
+See also "/home/morten/UNI/P3/robot_handover/UR10/p3_ws/build/robot_handover/CMakeFiles/CMakeError.log".
+make: *** [Makefile:1090: cmake_check_build_system] Error 1
