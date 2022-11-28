@@ -1,5 +1,5 @@
 import numpy as np 
-from skimage.transform import resize #pip install -U scikit-image
+#from skimage.transform import resize #pip install -U scikit-image
 import cv2 
 
 def map_rgb_to_depth_size(rgb_image):
