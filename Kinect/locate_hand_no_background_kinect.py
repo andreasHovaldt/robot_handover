@@ -32,7 +32,7 @@ def get_hsv_data(img):  #Function to obtain hsv-data from an image.
     return [np.average(hsv_img[:,:,0]),np.average(hsv_img[:,:,1]),np.average(hsv_img[:,:,2])]
 
 
-glove_img = cv2.imread("~/Documents/GitHub/robot_handover/Mats/cameraTest/Kinect V2/glove_color_v2.jpg")
+glove_img = cv2.imread("/home/andreas/Documents/GitHub/robot_handover/Mats/cameraTest/Kinect V2/glove_color_v2.jpg")
 glove_hsv = get_hsv_data(glove_img)
 hs = np.array(glove_hsv)*1.2 #Define a scalar to help with thresholding
 ls = np.array(glove_hsv)*0.8 #Define a scalar to help with thresholding
