@@ -1,7 +1,5 @@
-import freenect2 as fn2
 import numpy as np
 import cv2
-import time
 from detect_hand_as_blob import gloveDetector
 from math import cos, sin, radians
 
@@ -9,9 +7,6 @@ from math import cos, sin, radians
 
 X_ANGLE_SCALER = 90/512 #Scaler used to calculate the angle to the pink dot based on the "FOV" of the camera 
 Y_ANGLE_SCALER = 60/424
-
-
-
 
 
 
@@ -84,7 +79,7 @@ def calibrate_camera(color_image, depth_array): #Function used to calibrate our 
         pink_bin = cv2.dilate(pink_bin,dilate_kernel)
 
     print("finding keypoints")
-    keypoints, pink_with_keypoints = gloveDetector(pink_bin)
+    keypoints = gloveDetector(pink_bin)
 
     pts = cv2.KeyPoint.convert(keypoints)
     print(f"points {pts}")

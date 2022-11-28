@@ -9,7 +9,7 @@ import cv2
 from detect_hand_as_blob import gloveDetector
 from calibration_vector import calibrate_camera
 import depth_video
-import map_color_to_depth
+from map_color_to_depth import map_rgb_to_depth_size
 
 
 HIGHFRAMERATE = 6 #Used to make a high framerate once calibration is finished - 6 is high value, can make higher val for slower program
@@ -87,7 +87,7 @@ with(device.running()): #This is the loop that runs
             
             if only_human[0]: #if human detecetd 
                 #print("human found")
-                scaled_color_image = map_color_to_depth.map_rgb_to_depth_size(color_image[:,:,0:3])
+                scaled_color_image = map_rgb_to_depth_size(color_image[:,:,0:3])
                 
                 only_human8bit = cv2.cvtColor(depth_video.conv2_8bit(only_human[1]), cv2.COLOR_GRAY2BGR)
                 only_human_mask = only_human8bit > 10
@@ -103,7 +103,7 @@ with(device.running()): #This is the loop that runs
                 for n in range(5):
                     only_glove_binary = cv2.dilate(only_glove_binary,dilate_kernel)
                 cv2.imshow("only glove 2", only_glove_binary)
-                keypoints, glove_with_keypoints = gloveDetector(only_glove_binary) #Use gloveDetector function to obtain the keypoints where the glove is detected
+                keypoints = gloveDetector(only_glove_binary) #Use gloveDetector function to obtain the keypoints where the glove is detected
                 
                 pts = cv2.KeyPoint.convert(keypoints) #Simple opencv function that lets us access the location of the keypoints
                 print(f"pts {pts}")

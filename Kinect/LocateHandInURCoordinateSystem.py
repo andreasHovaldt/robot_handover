@@ -7,7 +7,7 @@ import freenect2 as fn2
 import numpy as np
 import cv2
 from detect_hand_as_blob import gloveDetector
-from calibration_vector import calibrate_camera
+from Kinect.calibration_vector import calibrate_camera
 import depth_video
 
 

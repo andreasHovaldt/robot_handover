@@ -1,8 +1,6 @@
-import freenect2 as fn2
 import numpy as np
 import cv2
 import scipy.ndimage
-import png 
 
 LOWER_DEPTH_THRESHOLD = 500
 HIGHER_DEPTH_THESHOLD = 3000
