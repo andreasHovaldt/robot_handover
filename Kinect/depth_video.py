@@ -5,12 +5,12 @@ import scipy.ndimage
 import png 
 
 LOWER_DEPTH_THRESHOLD = 500
-HIGHER_DEPTH_THESHOLD = 4000
+HIGHER_DEPTH_THESHOLD = 3000
 
 HIGHER_Y_CROP = 400
-LOWER_Y_CROP = 50
-HIGHER_X_CROP = 350
-LOWER_X_CROP = 50
+LOWER_Y_CROP = 20
+HIGHER_X_CROP = 400
+LOWER_X_CROP = 20
 
 def conv2_8bit(img16):
     scaler2_8b = 255/(np.max(img16)+1)
@@ -104,20 +104,7 @@ def find_hand(img16):
         only_largest_blob = np.zeros_like(img16)
         only_largest_blob[mask] = img16[mask]
         #cv2.imshow("only largest blob",conv2_8bit(only_largest_blob))
-        
-        #find all the pixel locations of the largest blob 
-        blob_locations = np.argwhere(only_largest_blob)
-        #print(f"blob locations \n {blob_locations}")
-
-        #find the pixel with the largest x value 
-        hand_location = blob_locations[blob_locations[:,1].argmin()]
-        #print(f"hand location \n {hand_location}")
-        #only_largest_blob = conv2_8bit_detailed(only_largest_blob)
-        final = cv2.cvtColor(conv2_8bit_detailed(only_largest_blob),cv2.COLOR_GRAY2BGR)
-        
-        #cv2.imshow("hand", cv2.circle(final,(hand_location[1],hand_location[0]),50,(0,0,255),-1))
-        print(img16.shape)
-        return [hand_location[0:2],only_largest_blob,True]
+        return [None, only_largest_blob, True]
     else:
         return [None, None, False]
 
@@ -166,16 +153,8 @@ def only_human(background, img16):
     
 
     mask = np_no_bg > 200        
-    #print("test test ")
-    #print(f"result2 \n {result2.shape}")
-    #print(f"human \n {human.shape}")
+    
     human[mask] = result2[mask]
-    #print("bg subtracted 2")
-    #cv2.imshow("human",conv2_8bit(human))
-
-
-    #human_filt = fast_median_noise_reduction(human,30,(3))
-
     
     only_human = find_hand(human)
     #print("only_human 7y")
@@ -188,5 +167,5 @@ def only_human(background, img16):
         cv2.imshow("correct_size_only_human", conv2_8bit(correct_sized_image))
         return [True, correct_sized_image]
     else: 
-        print("no human")
+        #print("no human")
         return [False, correct_sized_image]

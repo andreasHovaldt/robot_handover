@@ -82,7 +82,7 @@ with(device.running()): #This is the loop that runs
                 depth_exist = False
         
         if calibration_exist and (i % 6 == 0): 
-            print(f"looking for human {i}")
+            #print(f"looking for human {i}")
             only_human = depth_video.only_human(static_background,depth_image)
             
             if only_human[0]: #if human detecetd 
@@ -107,12 +107,11 @@ with(device.running()): #This is the loop that runs
                 
                 pts = cv2.KeyPoint.convert(keypoints) #Simple opencv function that lets us access the location of the keypoints
                 print(f"pts {pts}")
-                try: #remove this try except later 
-                    
+                if len(pts) > 0: #remove this try except later
                     for n in range(len(pts)): #This loop attempts to draw a red circle around each of the detected keypoints
                         scaled_color_image = cv2.circle(scaled_color_image,(int(keypoints[n].pt[0]),int(keypoints[n].pt[1])),10,(0,0,255),4)
-                except:
-                    print("no glove, no love")
+                else:
+                    print("no glove")
                 cv2.imshow("only human color", only_human_color)
                 cv2.imshow("Video", scaled_color_image)
                 
@@ -132,9 +131,6 @@ with(device.running()): #This is the loop that runs
                         #translation_vector = np.append(translation_vector, [1])
                         
                         print(f"Kinect to hand vector {kinect_to_hand_vector} \n UR to hand vector in ur coor {ur_to_hand_vector} ")
-                        
-
-                        
                 except:
                     print("error")
                     #continue
