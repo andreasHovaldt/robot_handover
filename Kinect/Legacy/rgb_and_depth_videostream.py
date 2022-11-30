@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 import time
 from detect_hand_as_blob import gloveDetector
-from calibration_vector import calibrate_camera
+from Kinect.calibration_vector import calibrate_camera
 i = 0
 
 device = fn2.Device()
