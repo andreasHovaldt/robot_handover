@@ -53,7 +53,7 @@ def calibrate_camera(color_image, depth_array): #Function used to calibrate our 
         hsv_img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
         return [np.average(hsv_img[:,:,0]),np.average(hsv_img[:,:,1]),np.average(hsv_img[:,:,2])]
 
-    pink_img = cv2.imread("Mats/pink.jpg")
+    pink_img = cv2.imread("/home/andreas/Documents/GitHub/robot_handover/Mats/pink.jpg")
     pink_hsv = get_hsv_data(pink_img)
     hs = np.array(pink_hsv)*1.2
     ls = np.array(pink_hsv)*0.8

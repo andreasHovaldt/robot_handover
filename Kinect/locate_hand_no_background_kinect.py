@@ -1,3 +1,23 @@
+#!/bin/env python3
+### ------------ ROS INITIALIZATION ------------ ###
+import rospy
+from robot_handover.msg import position
+
+rospy.init_node('position_topic')
+my_pub = rospy.Publisher('positioning',position,queue_size= 0)
+
+position_msg = position()
+
+position_msg.rot_w= 1
+position_msg.rot_x= 0
+position_msg.rot_y= 0
+position_msg.rot_z= 0
+
+rate = rospy.Rate(5)
+
+
+###-------------- NON ROS --------------###
+
 #To be able to run this program, make sure your laptop is powered in, as a low performance laptop will not be able to run the program.
 #If segmantation error core dump appears, try running the program again
 #If crash, make sure to read the KU-matrix to check if the pink dot was found.
@@ -12,7 +32,7 @@ import depth_video
 from map_color_to_depth import map_rgb_to_depth_size
 
 
-HIGHFRAMERATE = 6 #Used to make a high framerate once calibration is finished - 6 is high value, can make higher val for slower program
+HIGHFRAMERATE = 15 #Used to make a high framerate once calibration is finished - 6 is high value, can make higher val for slower program
 LOWFRAMERATE = 30 #Used to make a low framerate to make sure program doesn't crash during calibration.
 i = 0
 framerate = LOWFRAMERATE #Start off with low framerate
@@ -131,6 +151,14 @@ with(device.running()): #This is the loop that runs
                         #translation_vector = np.append(translation_vector, [1])
                         
                         print(f"Kinect to hand vector {kinect_to_hand_vector} \n UR to hand vector in ur coor {ur_to_hand_vector} ")
+                        
+                        position_msg.pos_x = ur_to_hand_vector[0]
+                        position_msg.pos_y = ur_to_hand_vector[1]
+                        position_msg.pos_z = ur_to_hand_vector[2]
+                        
+                        my_pub.publish(position_msg)
+                        
+                        
                 except:
                     print("error")
                     #continue
