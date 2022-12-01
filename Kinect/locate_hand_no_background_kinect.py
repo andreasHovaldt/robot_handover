@@ -11,6 +11,7 @@ from calibration_vector import calibrate_camera
 import depth_video
 import color_video
 
+from sklearn.neighbors import KNeighborsClassifier
 
 
 HIGHFRAMERATE = 6 #Used to make a high framerate once calibration is finished - 6 is high value, can make higher val for slower program
@@ -41,6 +42,16 @@ ls = np.array(glove_hsv)*0.8 #Define a scalar to help with thresholding
 dilate_kernel=np.array([[0,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1],[0,1,1,1,0]], np.uint8) #Kernel used for dilation
 erode_kernel = np.ones((3,3), np.uint8) #Kernel used for erosion
 
+
+#load pose hog dataset 
+print("loading pose data...")
+hog_pose_data = np.loadtxt("hog_pose_data.txt")
+
+x_train = hog_pose_data[:,0:hog_pose_data.shape[1]-1]
+y_train = hog_pose_data[:,hog_pose_data.shape[1]-1]
+pose_classifier = KNeighborsClassifier(n_neighbors=2, metric="euclidean", algorithm="ball_tree")
+pose_classifier.fit(x_train,y_train)
+
 #-------------------- Loop --------------------#
 
 image_counter = 0
@@ -68,7 +79,7 @@ with(device.running()): #This is the loop that runs
             
 
         #calibrate the kinect    
-        if color_exist and depth_exist and calibration_exist != True and (i % 10 == 0): #On startup, these are false so enter this loop
+        if color_exist and depth_exist and calibration_exist != True and (i % 20 == 0): #On startup, these are false so enter this loop
             framerate = LOWFRAMERATE #Set lowframerate for calibration - Helps to make sure program doesn't crash
             print("trying to calibrate")
             calibration_result = calibrate_camera(color_image, depth_point_array) #Obtain transformationmatrix from the Kinect to the UR
@@ -85,12 +96,15 @@ with(device.running()): #This is the loop that runs
                 color_exist = False
                 depth_exist = False
         
-        if calibration_exist and (i % 10 == 0): 
+        if calibration_exist and (i % 20 == 0): 
             #print(f"looking for human {i}")
             only_human = depth_video.only_human(static_background,depth_image)
             
             if only_human[0]: #if human detecetd 
                 print("human found")
+                hog_data = depth_video.extract_HOG(only_human[1])
+                hog_pred = pose_classifier.predict(np.array([hog_data]))
+                print(f"pose {hog_pred}")
                 scaled_color_image = color_video.map_rgb_to_depth_size(color_image[:,:,0:3]) #the color image is scaled to fit the depth image 
                 
                 scaled_color_image_no_bg = color_video.background_subtraction(static_color_background, scaled_color_image) #the background is removed from the color background 
