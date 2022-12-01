@@ -4,7 +4,7 @@ import depth_video
 import time 
 import os 
 import png 
-import skimage.feature as skifeat
+import skimage.feature as skifeat #pip install scikit-image
 import matplotlib.pyplot as plt 
 
 
@@ -34,7 +34,7 @@ def create_depth_img_array(path):
 
 
 
-data_folder_path = "/Kinect/images/poses_data/"
+data_folder_path = "Kinect/images/poses_data"
 
 background_path = "Kinect/images/background1.png"
 
@@ -54,34 +54,47 @@ cropped_static_backgound = static_backgound[100:400,50:350]
 
 prev_time = time.time()
 
-
+pose_number = 0
 
 dataset = []
-pose = 0
 with os.scandir(data_folder_path) as poses:
-    pose +=1
-    with os.scandir(os.path.join(data_folder_path, poses)) as img_type:
-        if img_type[0] == 'd':
-            with os.scandir(os.path.join(data_folder_path, poses,img_type)) as img_path:
-                pngdata = png.Reader(img_path).read_flat()
-                depth_img = np.array(pngdata[2]).reshape((pngdata[1], pngdata[0], -1))
-    #cv2.imshow("color", color_img) 
-    #cv2.waitKey(10)
-                only_human = depth_video.only_human(static_backgound, depth_img)
-                if only_human[0]:
-                    hog_features = depth_video.extract_HOG(only_human[1])
-                    #print(hog_features)
-                    data = hog_features
-                    data =np.r_[data, pose]
-                    #print(data)
-                    #print(np.array(data).shape)
-                    dataset.append(data)
+    for pose in poses:  
+        pose_number += 1  
+        print(f"{pose.name} = {pose_number}")
+        
+        with os.scandir(os.path.join(data_folder_path, pose.name)) as img_types:
+            for img_type in img_types:
+                if img_type.name[0] == 'd':
+                    with os.scandir(os.path.join(data_folder_path, pose.name ,img_type.name)) as img_paths:
+                        for img_path in img_paths:
+                            pngdata = png.Reader(os.path.join(data_folder_path, pose.name ,img_type.name, img_path.name)).read_flat()
+                            depth_img = np.array(pngdata[2]).reshape((pngdata[1], pngdata[0], -1))
+                #cv2.imshow("color", color_img) 
+                #cv2.waitKey(10)
+                            only_human = depth_video.only_human(static_backgound, depth_img)
+                            if only_human[0]:
+                                hog_features = depth_video.extract_HOG(only_human[1])
+                                #print(hog_features)
+                                data = hog_features
+                                if pose_number == 1:
+                                    data =np.r_[data, 5]
+                                elif pose_number == 3:
+                                    data =np.r_[data, 5]
+                                else:
+                                    data =np.r_[data, pose_number]
+                                #print(data)
+                                #print(np.array(data).shape)
+                                dataset.append(data)
+                                cv2.waitKey(1)
 
 np_dataset = np.array(dataset)
 
-np.savetxt("hog_pose_data.txt", np_dataset)
+
+
+print(np_dataset.shape)  
 
 print(np.sum(np_dataset))
 
-print(np_dataset.shape)          
+        
 
+np.savetxt("hog_pose_data.txt", np_dataset)

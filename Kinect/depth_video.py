@@ -163,7 +163,8 @@ def only_human(background, img16):
         #print("human found form depth videopy")
         #print(f"only human shape{only_human[1].shape} cast shape {correct_sized_image[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP].shape}")
         correct_sized_image[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP] = only_human[1]
-        cv2.imshow("correct_size_only_human", conv2_8bit(correct_sized_image))
+        
+        #cv2.imshow("correct_size_only_human", conv2_8bit(correct_sized_image))
         return [True, correct_sized_image]
     else: 
         #print("no human")
@@ -171,9 +172,31 @@ def only_human(background, img16):
 
 def extract_HOG(img16_only_human):
     img8 = conv2_8bit_detailed(img16_only_human)
-    rescale_human = cv2.resize(img8[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP],(50,50))
-    fd, hog_image = skifeat.hog(image=rescale_human,visualize=True)
+    #cv2.imshow("img8", img8)
+
+    blob_locations = np.argwhere(img8)
+    #print(f"blob locations \n {blob_locations}")
+
+    #find the pixel with the largest x value 
+    right_crop = blob_locations[blob_locations[:,1].argmax()][1]
+    left_crop  = blob_locations[blob_locations[:,1].argmin()][1]
+    lower_crop = blob_locations[blob_locations[:,0].argmax()][0]
+    upper_crop = blob_locations[blob_locations[:,0].argmin()][0]
+
+    #and_location  = blob_locations[blob_locations[:,1].argmin()]
+    #print(f"hand location \n {hand_location}")
+    
+    #final = cv2.cvtColor(img8,cv2.COLOR_GRAY2BGR)
+    
+    #cv2.imshow("final", cv2.circle(final,(hand_location[1],hand_location[0]),10,(0,0,255),-1))
+    #print(f"ric {right_crop}, lfc {left_crop}, upc {upper_crop}, loc {lower_crop}")
+    #rescale_human = cv2.resize(img8[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP],(100,100))
+    rescale_human = cv2.resize(img8[upper_crop:lower_crop, left_crop:right_crop],(200,200))
+    cv2.imshow("rescale human", rescale_human)
+    
+    fd, hog_image = skifeat.hog(image=rescale_human,orientations=8, pixels_per_cell=(32,32),visualize=True)
+
     #cv2.imshow("input", img8)
-    #cv2.imshow("output", hog_image)
+    cv2.imshow("output", hog_image)
     #cv2.waitKey()
     return fd
