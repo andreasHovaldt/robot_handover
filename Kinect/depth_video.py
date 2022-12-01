@@ -1,9 +1,10 @@
 import numpy as np
 import cv2
 import scipy.ndimage
+import skimage.feature as skifeat
 
-LOWER_DEPTH_THRESHOLD = 500
-HIGHER_DEPTH_THESHOLD = 3000
+LOWER_DEPTH_THRESHOLD = 700
+HIGHER_DEPTH_THESHOLD = 2300
 
 HIGHER_Y_CROP = 400
 LOWER_Y_CROP = 20
@@ -167,3 +168,12 @@ def only_human(background, img16):
     else: 
         #print("no human")
         return [False, correct_sized_image]
+
+def extract_HOG(img16_only_human):
+    img8 = conv2_8bit_detailed(img16_only_human)
+    rescale_human = cv2.resize(img8[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP],(50,50))
+    fd, hog_image = skifeat.hog(image=rescale_human,visualize=True)
+    #cv2.imshow("input", img8)
+    #cv2.imshow("output", hog_image)
+    #cv2.waitKey()
+    return fd
