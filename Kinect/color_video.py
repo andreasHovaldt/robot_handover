@@ -22,15 +22,21 @@ def map_rgb_to_depth_size(rgb_image):
     
 #function to remove the the bzcground from the color image based on the colors in the static color image 
 def background_subtraction(static_color_background, rgb_image_scaled):
+    #convert images to grayscale 
     bg_gray = cv2.cvtColor(static_color_background, cv2.COLOR_BGR2GRAY) 
     img_gray = cv2.cvtColor(rgb_image_scaled, cv2.COLOR_BGR2GRAY)
     
+    #convert to signed int arrays 
     background_array = np.array(bg_gray, np.int16)
     image_array = np.array(img_gray, np.int16)
-    
-    
+
+    #subtract the two images 
     subtracted = np.absolute(np.subtract(background_array, image_array))
+
+    #create a mask where there is no change 
     mask = subtracted < 10 
+    
+    #where there is no change set the input image to zero 
     rgb_image_scaled[mask] = 0 
     return rgb_image_scaled
 

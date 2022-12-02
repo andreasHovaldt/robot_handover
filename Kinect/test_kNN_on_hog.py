@@ -8,13 +8,17 @@ import matplotlib.pyplot as plt
 
 import time 
 
+#loading the hog dataset 
 hog_pose_data = np.loadtxt("hog_pose_data.txt")
 
+#splitting the data into training and testing 
 training_data, testing_data = train_test_split(hog_pose_data, test_size=0.2, random_state=13)
 
+#printing the amount of points in traning and testing data 
 print(f"No. of training examples: {training_data.shape[0]}")
 print(f"No. of testing examples: {testing_data.shape[0]}")
 
+#splitting the data into x and y, (y is the column containing the class)
 x_train = training_data[:,0:training_data.shape[1]-1]
 y_train = training_data[:,training_data.shape[1]-1]
 
@@ -40,9 +44,12 @@ y_test = testing_data[:,testing_data.shape[1]-1]
 classifier = KNeighborsClassifier(n_neighbors=2, metric="euclidean", algorithm="ball_tree")
 classifier.fit(x_train,y_train)
 
+#using the classifier to make a prediction 
 start_time = time.time()
 y_pred = classifier.predict(x_test)
 end_time = time.time()
+
+#compearing the results and determing accuracy 
 correct = 0
 for pred, real in zip(y_pred, y_test):
     print(f"pred = {pred} \t real = {real}")
