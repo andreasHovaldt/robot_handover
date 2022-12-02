@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #To be able to run this program, make sure your laptop is powered in, as a low performance laptop will not be able to run the program.
 #If segmantation error core dump appears, try running the program again
 #If crash, make sure to read the KU-matrix to check if the pink dot was found.
@@ -10,6 +11,7 @@ from detect_hand_as_blob import gloveDetector
 from calibration_vector import calibrate_camera
 import depth_video
 import color_video
+from math import pi
 
 from sklearn.neighbors import KNeighborsClassifier
 
@@ -27,6 +29,22 @@ calibration_exist = False
 calibration_vector = None 
 static_background = None
 static_color_background = None 
+
+#--------------------ROS publisher------------------#
+import rospy
+from robot_handover.msg import position
+
+rospy.init_node('new_topic')
+my_pub = rospy.Publisher('positioning',position,queue_size= 0)
+
+position_msg = position()
+position_msg.rot_x= pi/2
+position_msg.rot_y= 0
+position_msg.rot_z= pi/2+pi/4
+
+rate = rospy.Rate(5)
+
+
 
 #-------------------- Thresholding --------------------#
 def get_hsv_data(img):  #Function to obtain hsv-data from an image.
@@ -106,7 +124,7 @@ with(device.running()): #This is the loop that runs
                 hog_pred = pose_classifier.predict(np.array([hog_data]))
                 print(f"pose {hog_pred}")
                 scaled_color_image = color_video.map_rgb_to_depth_size(color_image[:,:,0:3]) #the color image is scaled to fit the depth image 
-                
+                #(1 = one hand, 2= no hands, 4 = two hands)
                 scaled_color_image_no_bg = color_video.background_subtraction(static_color_background, scaled_color_image) #the background is removed from the color background 
 
                 #cv2.imshow("color bg subtraction", scaled_color_image_no_bg) 
@@ -154,6 +172,22 @@ with(device.running()): #This is the loop that runs
                         #translation_vector = np.append(translation_vector, [1])
                         
                         print(f"Kinect to hand vector {kinect_to_hand_vector} \n UR to hand vector in ur coor {ur_to_hand_vector} ")
+
+
+                        #following lines publish the  x,y,z found using the kinect to the 'positioning' topic which the move script
+                        #subscribes from 
+
+                        if hog_pred == 2:
+                            position_msg.pos_x = 0
+                            position_msg.pos_y = 0
+                            position_msg.pos_z = 0
+                        else:
+                            position_msg.pos_x = ur_to_hand_vector[0]
+                            position_msg.pos_y = ur_to_hand_vector[1]
+                            position_msg.pos_z = ur_to_hand_vector[2]
+                        
+                    
+                        my_pub.publish(position_msg)
                 except:
                     print("error")
                     #continue
