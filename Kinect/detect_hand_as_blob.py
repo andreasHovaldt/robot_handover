@@ -60,33 +60,3 @@ def gloveDetector(image,detector):
   
 
 
-
-
-def main():
-  
-  img = cv2.imread("Mats/cameraTest/Kinect V2/5.jpg")
-  #imgThresholded = (glove_thresholde.findGlove(img))
-
-  # Generate keypoints and image w/ keypoints
-  #keypoints, imgThresholded_with_keypoints = gloveDetector(imgThresholded)
-  
-  # Show img
-  #cv2.imshow("KeypointsThresholded", imgThresholded_with_keypoints)
-
-
-  #pts = cv2.KeyPoint_convert(keypoints)
-
-  #print(pts.size/2) # Number of keypoints
-  #print(keypoints[0].size)
-  #Find coordinates
-
-  #Loop to print location of all keypoints
-  #for i in range(int(pts.size/2)):
-  
-  #  print("Keypoint nr:", [i]," Position is: ", (keypoints[i].pt[0], keypoints[i].pt[1]))
-  
-
-  #cv2.waitKey(0)
-
-if __name__ == "__main__":
-  main()
