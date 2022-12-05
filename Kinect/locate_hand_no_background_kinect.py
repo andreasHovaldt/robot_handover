@@ -6,7 +6,7 @@
 import freenect2 as fn2
 import numpy as np
 import cv2
-from detect_hand_as_blob import gloveDetector
+from detect_hand_as_blob import gloveDetector, create_hand_detector
 from calibration_vector import calibrate_camera
 import depth_video
 import color_video
@@ -52,6 +52,9 @@ y_train = hog_pose_data[:,hog_pose_data.shape[1]-1]
 pose_classifier = KNeighborsClassifier(n_neighbors=2, metric="euclidean", algorithm="ball_tree")
 pose_classifier.fit(x_train,y_train)
 
+#creating hand detector
+hand_detector = create_hand_detector()
+
 #-------------------- Loop --------------------#
 
 image_counter = 0
@@ -82,7 +85,7 @@ with(device.running()): #This is the loop that runs
         if color_exist and depth_exist and calibration_exist != True and (i % 20 == 0): #On startup, these are false so enter this loop
             framerate = LOWFRAMERATE #Set lowframerate for calibration - Helps to make sure program doesn't crash
             print("trying to calibrate")
-            calibration_result = calibrate_camera(color_image, depth_point_array) #Obtain transformationmatrix from the Kinect to the UR
+            calibration_result = calibrate_camera(color_image, depth_point_array, hand_detector) #Obtain transformationmatrix from the Kinect to the UR
             if calibration_result[2]: #if the calibration is succsesfull 
                 KU_transformation_matrix = calibration_result[0]
                 base_coor = calibration_result[1] #the coordinats of the base 
@@ -126,7 +129,7 @@ with(device.running()): #This is the loop that runs
                 for n in range(5):
                     only_glove_binary = cv2.dilate(only_glove_binary,dilate_kernel)
                 cv2.imshow("only glove 2", only_glove_binary)
-                keypoints = gloveDetector(only_glove_binary) #Use gloveDetector function to obtain the keypoints where the glove is detected
+                keypoints = gloveDetector(only_glove_binary,hand_detector) #Use gloveDetector function to obtain the keypoints where the glove is detected
                 
                 pts = cv2.KeyPoint.convert(keypoints) #Simple opencv function that lets us access the location of the keypoints
                 print(f"pts {pts}")

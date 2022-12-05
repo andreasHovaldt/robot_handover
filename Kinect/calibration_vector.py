@@ -39,7 +39,7 @@ def create_transformation_matrix(translation_vector, rotation_y = 0, rotation_x 
 
 
 
-def calibrate_camera(color_image, depth_array): #Function used to calibrate our camera
+def calibrate_camera(color_image, depth_array, detector): #Function used to calibrate our camera
     mark_to_ur_translation = create_transformation_matrix(np.array([0,0,-0.09,1])) #Creating transformation from red dot to the UR robot
     
     mark_to_ur_rotation_y = create_transformation_matrix(np.array([0,0,0,1]),45) #Creating the y rotation from red dot to UR
@@ -79,8 +79,8 @@ def calibrate_camera(color_image, depth_array): #Function used to calibrate our 
         pink_bin = cv2.dilate(pink_bin,dilate_kernel)
 
     print("finding keypoints")
-    keypoints = gloveDetector(pink_bin)
-
+    keypoints = gloveDetector(pink_bin, detector)
+    print(keypoints)
     pts = cv2.KeyPoint.convert(keypoints)
     print(f"points {pts}")
     if len(pts) != 0:
