@@ -178,9 +178,9 @@ with(device.running()): #This is the loop that runs
                         #subscribes from 
 
                         if hog_pred == 2:
-                            position_msg.pos_x = 0
+                            position_msg.pos_x = 0.8
                             position_msg.pos_y = 0
-                            position_msg.pos_z = 0
+                            position_msg.pos_z = 0.5
                         else:
                             position_msg.pos_x = ur_to_hand_vector[0]
                             position_msg.pos_y = ur_to_hand_vector[1]
