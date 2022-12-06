@@ -4,7 +4,7 @@ import scipy.ndimage
 import skimage.feature as skifeat
 
 LOWER_DEPTH_THRESHOLD = 700
-HIGHER_DEPTH_THESHOLD = 2300
+HIGHER_DEPTH_THESHOLD = 2600
 
 HIGHER_Y_CROP = 400
 LOWER_Y_CROP = 20
@@ -127,6 +127,7 @@ def create_static_backgound(img16):
     return np.array(result2, np.int16)
 
 def only_human(background, img16):
+    cv2.imshow("input", conv2_8bit(img16))
     depth_img = img16[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP]
     #print(f"cropped image shape {depth_img.shape}")
     #threshold the depth 
@@ -134,7 +135,7 @@ def only_human(background, img16):
     result2 = np.zeros_like(depth_img)
     mask_close = depth_img > LOWER_DEPTH_THRESHOLD
     mask_far = depth_img < HIGHER_DEPTH_THESHOLD
-
+    
     mask_total = mask_close == mask_far 
     result[mask_total] = depth_img[mask_total]
 
@@ -194,7 +195,7 @@ def extract_HOG(img16_only_human):
     #print(f"ric {right_crop}, lfc {left_crop}, upc {upper_crop}, loc {lower_crop}")
     #rescale_human = cv2.resize(img8[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP],(100,100))
 
-    #using all the outermost pixels we crop the image as tightly as possible, and resize it to 200 x 200
+    #using all the outermost pixels we crop the image as tightly as possible, and resize it to 256 x 256
     rescale_human = cv2.resize(img8[upper_crop:lower_crop, left_crop:right_crop],(256,256))
     cv2.imshow("rescale human", rescale_human)
     
