@@ -6,7 +6,7 @@ import numpy as np
 import cv2 
 import scipy.ndimage
 import time
-import map_color_to_depth
+import map_color_to_depth as map_color_to_depth
 import depth_video
 
 

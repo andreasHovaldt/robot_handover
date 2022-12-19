@@ -7,11 +7,11 @@ import freenect2 as fn2
 import numpy as np
 import cv2
 from detect_hand_as_blob import gloveDetector
-from calibration_vector import calibrate_camera
+from Kinect.calibration_vector import calibrate_camera
 import depth_video
 
 
-HIGHFRAMERATE = 6 #Used to make a high framerate once calibration is finished
+HIGHFRAMERATE = 6 #Used to make a high framerate once calibration is finished - 6 is high value, can make higher val for slower program
 LOWFRAMERATE = 30 #Used to make a low framerate to make sure program doesn't crash during calibration.
 i = 0
 framerate = LOWFRAMERATE #Start off with low framerate
