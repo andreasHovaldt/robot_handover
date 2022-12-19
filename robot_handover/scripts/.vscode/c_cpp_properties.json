@@ -1,0 +1,45 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/rosubuntu/ur_ws/devel/include/**",
+        "/home/rosubuntu/ws_moveit/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/rosubuntu/ur_ws/src/moveit/moveit_planners/chomp/chomp_motion_planner/include/**",
+        "/home/rosubuntu/ur_ws/src/Universal_Robots_ROS_Driver/controller_stopper/include/**",
+        "/home/rosubuntu/ur_ws/src/geometric_shapes/include/**",
+        "/home/rosubuntu/ur_ws/src/moveit/moveit_planners/chomp/chomp_interface/include/**",
+        "/home/rosubuntu/ur_ws/src/moveit_resources/prbt_ikfast_manipulator_plugin/include/**",
+        "/home/rosubuntu/ur_ws/src/moveit/moveit_ros/benchmarks/include/**",
+        "/home/rosubuntu/ur_ws/src/moveit/moveit_plugins/moveit_ros_control_interface/include/**",
+        "/home/rosubuntu/ur_ws/src/moveit/moveit_ros/move_group/include/**",
+        "/home/rosubuntu/ur_ws/src/moveit/moveit_ros/occupancy_map_monitor/include/**",
+        "/home/rosubuntu/ur_ws/src/moveit/moveit_ros/robot_interaction/include/**",
+        "/home/rosubuntu/ur_ws/src/moveit/moveit_ros/moveit_servo/include/**",
+        "/home/rosubuntu/ur_ws/src/moveit/moveit_setup_assistant/include/**",
+        "/home/rosubuntu/ur_ws/src/moveit/moveit_plugins/moveit_simple_controller_manager/include/**",
+        "/home/rosubuntu/ur_ws/src/moveit_visual_tools/include/**",
+        "/home/rosubuntu/ur_ws/src/moveit/moveit_planners/pilz_industrial_motion_planner/include/**",
+        "/home/rosubuntu/ur_ws/src/moveit/moveit_planners/pilz_industrial_motion_planner_testutils/include/**",
+        "/home/rosubuntu/ur_ws/src/robot_handover/include/**",
+        "/home/rosubuntu/ur_ws/src/rviz_visual_tools/include/**",
+        "/home/rosubuntu/ur_ws/src/moveit/moveit_planners/sbpl/core/sbpl_interface/include/**",
+        "/home/rosubuntu/ur_ws/src/srdfdom/include/**",
+        "/home/rosubuntu/ur_ws/src/Universal_Robots_ROS_Driver/ur_calibration/include/**",
+        "/home/rosubuntu/ur_ws/src/universal_robot/ur_kinematics/include/**",
+        "/home/rosubuntu/ur_ws/src/Universal_Robots_ROS_Driver/ur_robot_driver/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

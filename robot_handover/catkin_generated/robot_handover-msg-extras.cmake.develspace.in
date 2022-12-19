@@ -1,2 +1,0 @@
-set(robot_handover_MESSAGE_FILES "/home/andreas/robot_handover_ros/src/robot_handover/msg/position.msg;/home/andreas/robot_handover_ros/src/robot_handover/msg/joint_angles.msg")
-set(robot_handover_SERVICE_FILES "")
