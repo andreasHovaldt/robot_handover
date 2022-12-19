@@ -67,6 +67,7 @@ class robot_controller():
         # Initialize moveit commander, used for controlling the robot
         moveit_commander.roscpp_initialize(sys.argv)
         
+        # following line initiates the nodein ROS
         rospy.init_node("ur_move.py", anonymous=True)
         
         # Instantiate robot controller, provides kinematic model and current joint states
@@ -138,7 +139,7 @@ class robot_controller():
         
         self.scene.add_box('table',p, (1.72,2.60,0.05))
     
-    # Go to x,y,z
+    # 
     def go_to_pose_goal(self):
         move_group = self.move_group
         

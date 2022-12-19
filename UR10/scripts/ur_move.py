@@ -8,8 +8,8 @@ import moveit_commander
 import moveit_msgs.msg
 import geometry_msgs.msg
 
-from robot_handover.msg import position
-from robot_handover.msg import joint_angles
+from robot_handover.msg import Num
+
 from moveit_commander.conversions import pose_to_list
 
 
@@ -128,6 +128,8 @@ class robot_controller():
         pose_goal.orientation.x = self.rot_x
         pose_goal.orientation.y = self.rot_y
         pose_goal.orientation.z = self.rot_z
+
+        position_orientation = [self.pos_x, self.pos_y, self.pos_z, self.rot_x, self.rot_y, self.rot_z]
         
         
         move_group.set_pose_target(pose_goal)
@@ -212,7 +214,7 @@ def main():
             
             input("Press 'Enter' to go to position...")
             print("Going to position...")
-            rospy.Subscriber("positioning",position,callback=robot_control.position_callback)
+            rospy.Subscriber("positioning",Num,callback=robot_control.position_callback)
             robot_control.go_to_pose_goal()
             
             #time.sleep(0.5)
