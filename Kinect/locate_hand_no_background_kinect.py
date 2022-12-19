@@ -1,23 +1,4 @@
-#!/bin/env python3
-### ------------ ROS INITIALIZATION ------------ ###
-import rospy
-from robot_handover.msg import position
-
-rospy.init_node('position_topic')
-my_pub = rospy.Publisher('positioning',position,queue_size= 0)
-
-position_msg = position()
-
-position_msg.rot_w= 1
-position_msg.rot_x= 0
-position_msg.rot_y= 0
-position_msg.rot_z= 0
-
-rate = rospy.Rate(5)
-
-
-###-------------- NON ROS --------------###
-
+#!/usr/bin/env python3
 #To be able to run this program, make sure your laptop is powered in, as a low performance laptop will not be able to run the program.
 #If segmantation error core dump appears, try running the program again
 #If crash, make sure to read the KU-matrix to check if the pink dot was found.
@@ -29,7 +10,10 @@ import cv2
 from detect_hand_as_blob import gloveDetector
 from calibration_vector import calibrate_camera
 import depth_video
-from map_color_to_depth import map_rgb_to_depth_size
+import color_video
+from math import pi
+
+from sklearn.neighbors import KNeighborsClassifier
 
 
 HIGHFRAMERATE = 15 #Used to make a high framerate once calibration is finished - 6 is high value, can make higher val for slower program
@@ -44,6 +28,22 @@ depth_exist = False
 calibration_exist = False
 calibration_vector = None 
 static_background = None
+static_color_background = None 
+
+#--------------------ROS publisher------------------#
+import rospy
+from robot_handover.msg import position
+
+rospy.init_node('new_topic')
+my_pub = rospy.Publisher('positioning',position,queue_size= 0)
+
+position_msg = position()
+position_msg.rot_x= pi/2
+position_msg.rot_y= 0
+position_msg.rot_z= pi/2+pi/4
+
+rate = rospy.Rate(5)
+
 
 
 #-------------------- Thresholding --------------------#
@@ -52,13 +52,23 @@ def get_hsv_data(img):  #Function to obtain hsv-data from an image.
     return [np.average(hsv_img[:,:,0]),np.average(hsv_img[:,:,1]),np.average(hsv_img[:,:,2])]
 
 
-glove_img = cv2.imread("/home/andreas/Documents/GitHub/robot_handover/Mats/cameraTest/Kinect V2/glove_color_v2.jpg")
+glove_img = cv2.imread("/home/alfred/Documents/GitHub/robot_handover/Mats/cameraTest/Kinect V2/glove_color_v2.jpg")
 glove_hsv = get_hsv_data(glove_img)
 hs = np.array(glove_hsv)*1.2 #Define a scalar to help with thresholding
 ls = np.array(glove_hsv)*0.8 #Define a scalar to help with thresholding
 
 dilate_kernel=np.array([[0,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1],[0,1,1,1,0]], np.uint8) #Kernel used for dilation
 erode_kernel = np.ones((3,3), np.uint8) #Kernel used for erosion
+
+
+#load pose hog dataset 
+print("loading pose data...")
+hog_pose_data = np.loadtxt("hog_pose_data.txt")
+
+x_train = hog_pose_data[:,0:hog_pose_data.shape[1]-1]
+y_train = hog_pose_data[:,hog_pose_data.shape[1]-1]
+pose_classifier = KNeighborsClassifier(n_neighbors=2, metric="euclidean", algorithm="ball_tree")
+pose_classifier.fit(x_train,y_train)
 
 #-------------------- Loop --------------------#
 
@@ -73,6 +83,7 @@ with(device.running()): #This is the loop that runs
             #print("color")
             currentFrame = frame #Frame is what the camera returns
             color_image = currentFrame.to_array() #We convert the frame into an array to change the datatype, and can now easily show the frame                
+            color_image = color_image[:,:,0:3]
             color_exist = True 
         
         #get the depth frame and pre-process 
@@ -86,39 +97,49 @@ with(device.running()): #This is the loop that runs
             
 
         #calibrate the kinect    
-        if color_exist and depth_exist and calibration_exist != True: #On startup, these are false so enter this loop
+        if color_exist and depth_exist and calibration_exist != True and (i % 20 == 0): #On startup, these are false so enter this loop
             framerate = LOWFRAMERATE #Set lowframerate for calibration - Helps to make sure program doesn't crash
             print("trying to calibrate")
             calibration_result = calibrate_camera(color_image, depth_point_array) #Obtain transformationmatrix from the Kinect to the UR
-            if calibration_result[2]:
+            if calibration_result[2]: #if the calibration is succsesfull 
                 KU_transformation_matrix = calibration_result[0]
-                base_coor = calibration_result[1]
+                base_coor = calibration_result[1] #the coordinats of the base 
                 calibration_exist = True
                 static_background = depth_video.create_static_backgound(depth_image) #create static background 
+                static_color_background = color_video.map_rgb_to_depth_size(color_image) #create static color bacground (scaled to fit depth image)
+                cv2.imshow("static color background", static_color_background)
                 print(f"This is KU:  \n  {KU_transformation_matrix}")
             else: 
                 print("calibration error")
                 color_exist = False
                 depth_exist = False
         
-        if calibration_exist and (i % 6 == 0): 
+        if calibration_exist and (i % 20 == 0): 
             #print(f"looking for human {i}")
             only_human = depth_video.only_human(static_background,depth_image)
             
             if only_human[0]: #if human detecetd 
-                #print("human found")
-                scaled_color_image = map_rgb_to_depth_size(color_image[:,:,0:3])
-                
-                only_human8bit = cv2.cvtColor(depth_video.conv2_8bit(only_human[1]), cv2.COLOR_GRAY2BGR)
-                only_human_mask = only_human8bit > 10
+                print("human found")
+                hog_data = depth_video.extract_HOG(only_human[1])
+                hog_pred = pose_classifier.predict(np.array([hog_data]))
+                print(f"pose {hog_pred}")
+                scaled_color_image = color_video.map_rgb_to_depth_size(color_image[:,:,0:3]) #the color image is scaled to fit the depth image 
+                #(1 = one hand, 2= no hands, 4 = two hands)
+                scaled_color_image_no_bg = color_video.background_subtraction(static_color_background, scaled_color_image) #the background is removed from the color background 
+
+                #cv2.imshow("color bg subtraction", scaled_color_image_no_bg) 
+
+                #using the depth image with only the human to remove the background on the color image 
+                only_human8bit = cv2.cvtColor(depth_video.conv2_8bit(only_human[1]), cv2.COLOR_GRAY2BGR) 
+                only_human_mask = only_human8bit > 15
                 only_human_color=np.zeros_like(scaled_color_image)
                 only_human_color[only_human_mask]=scaled_color_image[only_human_mask]
                 
                 hsv_img = cv2.cvtColor(only_human_color,cv2.COLOR_BGR2HSV)
-                only_glove_binary = cv2.inRange(hsv_img,(ls[0]*0.8,ls[1]*0.7,ls[2]*0.7),(hs[0]*1.2,hs[1]*1.3,hs[2]*1.3)) #Lower / Make these values higher to make more or less sensitive glove - Returns binary image, where the color that overlaps with the glove is shown as white
+                only_glove_binary = cv2.inRange(hsv_img,(ls[0]*0.7,ls[1]*0.7,ls[2]*0.6),(hs[0]*1.3,hs[1]*1.3,hs[2]*1.4)) #Lower / Make these values higher to make more or less sensitive glove - Returns binary image, where the color that overlaps with the glove is shown as white
                 cv2.imshow("only glove 1", only_glove_binary)
                 #erode and dilate the glove to remove noise 
-                for n in range(2):
+                for n in range(1):
                     only_glove_binary = cv2.erode(only_glove_binary,erode_kernel) 
                 for n in range(5):
                     only_glove_binary = cv2.dilate(only_glove_binary,dilate_kernel)
@@ -151,14 +172,22 @@ with(device.running()): #This is the loop that runs
                         #translation_vector = np.append(translation_vector, [1])
                         
                         print(f"Kinect to hand vector {kinect_to_hand_vector} \n UR to hand vector in ur coor {ur_to_hand_vector} ")
+
+
+                        #following lines publish the  x,y,z found using the kinect to the 'positioning' topic which the move script
+                        #subscribes from 
+
+                        if hog_pred == 2:
+                            position_msg.pos_x = 0.8
+                            position_msg.pos_y = 0
+                            position_msg.pos_z = 0.5
+                        else:
+                            position_msg.pos_x = ur_to_hand_vector[0]
+                            position_msg.pos_y = ur_to_hand_vector[1]
+                            position_msg.pos_z = ur_to_hand_vector[2]
                         
-                        position_msg.pos_x = ur_to_hand_vector[0]
-                        position_msg.pos_y = ur_to_hand_vector[1]
-                        position_msg.pos_z = ur_to_hand_vector[2]
-                        
+                    
                         my_pub.publish(position_msg)
-                        
-                        
                 except:
                     print("error")
                     #continue

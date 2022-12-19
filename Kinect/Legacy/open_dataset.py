@@ -6,7 +6,7 @@ import numpy as np
 import cv2 
 import scipy.ndimage
 import time
-import map_color_to_depth as map_color_to_depth
+import color_video
 import depth_video
 
 
@@ -61,7 +61,7 @@ while True:
         #depth_img = scipy.signal.medfilt2d(depth_img,3)
         
         
-        scaled_color = map_color_to_depth.map_rgb_to_depth_size(color_img)
+        scaled_color = color_video.map_rgb_to_depth_size(color_img)
         cv2.imshow("color", scaled_color)
         depth_img8bit = conv2_8bit(depth_img)
         depth_img8bit = depth_img8bit.reshape((424,512))
