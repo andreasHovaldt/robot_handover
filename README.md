@@ -1,5 +1,5 @@
 # robot_handover
-School project for robot-to-human handovers, using a UR10 robotic manipulator and a Kinect for Windows V2 camera
+3. semester project for robot-to-human handovers, using a UR10 robotic manipulator and a Kinect for Windows V2 camera
 
 
 Dependencies:
@@ -16,3 +16,6 @@ Install python wrapper for libfreenect2 (https://rjw57.github.io/freenect2-pytho
   * sudo ln -s $HOME/freenect2/lib/libfreenect2.so.0.2 /usr/lib/libfreenect2.so.0.2
 
 
+# How to use:
+
+1. Open
