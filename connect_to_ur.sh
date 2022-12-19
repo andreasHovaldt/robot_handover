@@ -23,6 +23,6 @@ gnome-terminal -- rosrun robot_handover move_ur.py # Ændre den her hvis move_ur
 
 read -p 'Press "Enter" key to start the camera script'
 
-gnome-terminal --working-directory=~/ -- rosrun robot_handover locate_hand_no_background_kinect.py  # Ændre også den her hvis filen hedder noget andet
+gnome-terminal -- rosrun robot_handover locate_hand_no_background_kinect.py  # Ændre også den her hvis filen hedder noget andet
 
 
