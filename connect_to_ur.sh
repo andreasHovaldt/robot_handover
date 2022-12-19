@@ -4,8 +4,15 @@
 
 path_to_ws_build=$HOME/UNI/P3/catkin_ws/build/
 
+robot_ip=172.31.1.115
 
-gnome-terminal --working-directory=${path_to_ws_build} -- roslaunch ur_robot_driver ur10_bringup.launch robot_ip:=172.31.1.115 kinematics_config:=${path_to_ws_build}../../my_robot_calibration.yaml
+config_path=${path_to_ws_build}../../my_robot_calibration.yaml
+
+gnome-terminal --working-directory=${path_to_ws_build} -- roslaunch ur_robot_driver ur10_bringup.launch robot_ip:=${robot_ip}
+#kinematics_config:=${config_path}
+
+#Uncomment previous line if a config file exists
+
 
 echo "Press any key when UR-Driver has started"
 while [ true ] ; do
