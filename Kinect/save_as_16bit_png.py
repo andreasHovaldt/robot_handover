@@ -40,18 +40,18 @@ with(device.running()):
             #cv2.imshow("IR Image", ir_image)
         
         
-        if i >= 1000:
+        if i >= 10:
             break   
         i+=1
 #print(images_d[1])
 
 for key in images_d:
-    file_location = os.path.join("Kinect/images/depth",f"gray{key}.png")
+    file_location = os.path.join("Kinect/images/depth",f"{key}.png")
     with open(file_location, 'wb') as f:
         zgray2list = images_d[key].tolist()
         writer_depth.write(f, zgray2list)
 for key in images_c:
-    file_location = os.path.join("Kinect/images/color", f"color{key}.png")
+    file_location = os.path.join("Kinect/images/color", f"{key}.png")
     #print(images_c[key])
     cv2.imwrite(file_location, images_c[key])
     #with open(file_location, 'wb') as f:
