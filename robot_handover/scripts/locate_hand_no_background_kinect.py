@@ -34,10 +34,15 @@ static_color_background = None
 import rospy
 from robot_handover.msg import position
 
+#we initiate the topic we wish to publish to
 rospy.init_node('new_topic')
+
+#we create the publisher object
 my_pub = rospy.Publisher('positioning',position,queue_size= 0)
 
 position_msg = position()
+
+#the following message ensures that the robot starts in its initial position
 position_msg.rot_x= pi/2
 position_msg.rot_y= 0
 position_msg.rot_z= pi/2+pi/4
@@ -102,6 +107,7 @@ with(device.running()): #This is the loop that runs
             framerate = LOWFRAMERATE #Set lowframerate for calibration - Helps to make sure program doesn't crash
             print("trying to calibrate")
             calibration_result = calibrate_camera(color_image, depth_point_array,hand_detector) #Obtain transformationmatrix from the Kinect to the UR
+            
             if calibration_result[2]: #if the calibration is succsesfull 
                 KU_transformation_matrix = calibration_result[0]
                 base_coor = calibration_result[1] #the coordinats of the base 
@@ -124,7 +130,9 @@ with(device.running()): #This is the loop that runs
                 print("human found")
                 hog_data = depth_video.extract_HOG(only_human[1])
                 hog_pred = pose_classifier.predict(np.array([hog_data]))
+
                 print(f"pose {hog_pred}")
+
                 scaled_color_image = color_video.map_rgb_to_depth_size(color_image[:,:,0:3]) #the color image is scaled to fit the depth image 
                 #(1 = one hand, 2= no hands, 4 = two hands)
                 scaled_color_image_no_bg = color_video.background_subtraction(static_color_background, scaled_color_image) #the background is removed from the color background 
