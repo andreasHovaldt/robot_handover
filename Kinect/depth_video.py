@@ -151,10 +151,12 @@ def only_human(background, img16):
     human = np.zeros_like(np_no_bg)
     
 
-    mask = np_no_bg > 200        
+    mask = np_no_bg > 1000        
     
     human[mask] = result2[mask]
     
+    cv2.imshow("human", conv2_8bit_detailed(human))
+
     only_human = find_hand(human)
     #print("only_human 7y")
     
@@ -164,7 +166,7 @@ def only_human(background, img16):
         #print(f"only human shape{only_human[1].shape} cast shape {correct_sized_image[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP].shape}")
         correct_sized_image[LOWER_Y_CROP:HIGHER_Y_CROP, LOWER_X_CROP:HIGHER_X_CROP] = only_human[1]
         
-        #cv2.imshow("correct_size_only_human", conv2_8bit(correct_sized_image))
+        cv2.imshow("correct_size_only_human", conv2_8bit(correct_sized_image))
         return [True, correct_sized_image]
     else: 
         #print("no human")

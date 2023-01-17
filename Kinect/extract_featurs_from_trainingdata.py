@@ -35,12 +35,16 @@ def create_depth_img_array(path):
 
 
 data_folder_path = "Kinect/images/poses_data"
+data_folder_path2 = "Kinect/images/extra_pose_data"
 
 background_path = "Kinect/images/background1.png"
+background_path2 = "Kinect/images/background2.png"
 
 pngdata = png.Reader(background_path).read_flat()
-background_raw = np.array(pngdata[2]).reshape((pngdata[1], pngdata[0], -1))
+pngdata2 = png.Reader(background_path2).read_flat()
 
+background_raw = np.array(pngdata[2]).reshape((pngdata[1], pngdata[0], -1))
+background_raw2 = np.array(pngdata2[2]).reshape((pngdata2[1], pngdata2[0], -1))
 #def conv2_8bit(img16):
 #    scaler2_8b = 255/(np.max(img16)+1)
 #    return np.array(img16*scaler2_8b, np.uint8)
@@ -48,7 +52,13 @@ background_raw = np.array(pngdata[2]).reshape((pngdata[1], pngdata[0], -1))
 
 #create static backgound 
 static_backgound = depth_video.create_static_backgound(background_raw)
-cropped_static_backgound = static_backgound[100:400,50:350]
+static_backgound2 = depth_video.create_static_backgound(background_raw2)
+
+cv2.imshow("bg1", static_backgound)
+
+cv2.imshow("bg2", static_backgound2)
+
+#cropped_static_backgound = static_backgound[100:400,50:350]
 
 
 
@@ -85,6 +95,31 @@ with os.scandir(data_folder_path) as poses:
                                 #print(np.array(data).shape)
                                 dataset.append(data)
                                 cv2.waitKey(1)
+
+
+#adding the extra data 
+
+with os.scandir(data_folder_path2) as img_paths:
+    print("extra data")
+    for img_path in img_paths:
+        print(f"{img_path.name}")
+        pngdata = png.Reader(os.path.join(data_folder_path2, img_path.name)).read_flat()
+        depth_img = np.array(pngdata[2]).reshape((pngdata[1], pngdata[0], -1))
+        cv2.imshow("test", depth_video.conv2_8bit_detailed(depth_img))
+        cv2.waitKey(30)
+        #cv2.imshow("color", color_img) 
+        #cv2.waitKey(10)
+        #if human detected we extract features 
+        only_human = depth_video.only_human(static_backgound2, depth_img)
+        if only_human[0]:
+            hog_features = depth_video.extract_HOG(only_human[1])
+            data = hog_features
+            data =np.r_[data, 2]
+            #print(data)
+            #print(np.array(data).shape)
+            dataset.append(data)
+            cv2.waitKey(1)    
+
 
 np_dataset = np.array(dataset)
 
